@@ -16,6 +16,7 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import logo from "../assets/logo.png";
 import Loader from "./Loader";
 import axios from "axios";
+import toast from "react-hot-toast";
 function Navbar() {
   const [screen, setScreen] = useState(); // State for screen size
   const { currency, setCurrency } = useCurrency();
@@ -66,21 +67,121 @@ function Navbar() {
   return (
     <nav className="navbar bg-body-tertiary fixed-top">
       {/* {load && <Loader />} */}
-      <div className="container-fluid">
-        <Link to="/" className="text-dark text-decoration-none">
-          <img src={logo} alt="" style={{ maxWidth: "150px" }} />
-          {/* <h3 className="my-auto d-none d-lg-block">NEW SMM</h3> */}
-        </Link>
-        <button
-          className="navbar-toggler d-block d-lg-none"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar"
-          aria-label="Toggle navigation"
+      <div className="w-100">
+        <div className="row d-flex">
+          <div className="col-12 col-lg-3 d-flex justify-content-between">
+            <Link to="/" className="text-dark text-decoration-none">
+              <img src={logo} alt="" style={{ maxWidth: "150px" }} />
+              {/* <h3 className="my-auto d-none d-lg-block">NEW SMM</h3> */}
+            </Link>
+            <button
+              className="navbar-toggler d-block d-lg-none"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div className="col-12 col-lg-9 d-flex justify-content-between mt-3 mt-lg-0">
+            {/* Header Search Box */}
+            <div className="header-search d-lg-flex d-none">
+              <div className="header-search-box">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Service Here"
+                />
+              </div>
+              <IoSearch className="fs-4" />
+            </div>
+
+            {/* User section with notifications and username */}
+            <div className="d-flex align-items-center justify-content-between w-100 ">
+              <button
+                className=" btn bell mx-4 position-relative "
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNotifications"
+                aria-controls="offcanvasNotifications"
+              >
+                <FaBell className="fw-semiBold fs-4" />
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {"."}
+                </span>
+              </button>
+              <div className="currency mx-2 btn btn-currency-select">
+                <FaCoins className="pe-1 d-none d-md-inline" />
+                <select
+                  className="currency-select"
+                  value={currency}
+                  onChange={handleCurrencyChange}
+                >
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="INR">INR</option>
+                  <option value="PKR">PKR</option>
+                </select>
+              </div>
+              <Link className="user mx-2 btn btn-second" to={"/profile"}>
+                <FaUserAlt />
+                {screen === "lg"
+                  ? authUser.userName
+                  : screen === "md"
+                  ? authUser.userName
+                  : screen === "sm"
+                  ? authUser.userName.slice(0, 5)
+                  : ""}{" "}
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/*Offcanvas notification*/}
+        <div
+          className="offcanvas offcanvas-end"
+          tabIndex="-1"
+          id="offcanvasNotifications"
+          aria-labelledby="offcanvasNotificationsLabel"
         >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="offcanvasNotificationsLabel">
+              Notifications
+            </h5>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="offcanvas-body">
+            <ul className="notification-list ps-0">
+              {notifications.map((notification, index) => (
+                <li key={index}>
+                  <div className="card">
+                    <div className="card-title d-flex justify-content-between align-items-center">
+                      {notification.title}{" "}
+                      <span className=" badge rounded-pill bg-danger text-end">
+                        {new Date(notification?.startDate).toDateString()}
+                      </span>
+                    </div>
+                    <div
+                      className="card-detail"
+                      dangerouslySetInnerHTML={{
+                        __html: notification.description,
+                      }}
+                    ></div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/*offcanvas side bar  */}
         <div
           className="offcanvas offcanvas-start"
           style={{
@@ -245,98 +346,6 @@ function Navbar() {
                 Logout
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* Header Search Box */}
-        <div className="header-search d-lg-flex d-none">
-          <div className="header-search-box">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Service Here"
-            />
-          </div>
-          <IoSearch className="fs-4" />
-        </div>
-
-        {/* User section with notifications and username */}
-        <div className="d-flex align-items-center">
-          <button
-            className=" btn bell mx-4 position-relative "
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNotifications"
-            aria-controls="offcanvasNotifications"
-          >
-            <FaBell className="fw-semiBold fs-4" />
-            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {"."}
-            </span>
-          </button>
-          <div className="currency mx-2 btn btn-currency-select">
-            <FaCoins className="pe-1 d-none d-md-inline" />
-            <select
-              className="currency-select"
-              value={currency}
-              onChange={handleCurrencyChange}
-            >
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="INR">INR</option>
-              <option value="PKR">PKR</option>
-            </select>
-          </div>
-          <Link className="user mx-2 btn btn-second" to={"/profile"}>
-            <FaUserAlt />
-            {screen === "lg"
-              ? authUser.userName
-              : screen === "md"
-              ? authUser.userName
-              : screen === "sm"
-              ? authUser.userName.slice(0, 5)
-              : ""}{" "}
-          </Link>
-        </div>
-
-        <div
-          className="offcanvas offcanvas-end"
-          tabIndex="-1"
-          id="offcanvasNotifications"
-          aria-labelledby="offcanvasNotificationsLabel"
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasNotificationsLabel">
-              Notifications
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="offcanvas-body">
-            <ul className="notification-list ps-0">
-              {notifications.map((notification, index) => (
-                <li key={index}>
-                  <div className="card">
-                    <div className="card-title d-flex justify-content-between align-items-center">
-                      {notification.title}{" "}
-                      <span className=" badge rounded-pill bg-danger text-end">
-                        {new Date(notification?.startDate).toDateString()}
-                      </span>
-                    </div>
-                    <div
-                      className="card-detail"
-                      dangerouslySetInnerHTML={{
-                        __html: notification.description,
-                      }}
-                    ></div>
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

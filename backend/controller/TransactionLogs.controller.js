@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
 import CurrencyConvertorModel from "../model/CurrencyConvertor.model.js";
 import transactionModel from "../model/TransactionLogs.model.js";
 import UserModel from "../model/User.model.js";
+import SiteSettings from "../model/SiteSettings.model.js";
+import { sendCustomEmail } from "./SendEmails.controller.js";
 
 export const sendAllTransactions = async (req, res) => {
   try {
@@ -96,8 +97,20 @@ export const approveTransaction = async (req, res) => {
       { new: true }
     );
 
+    const sendMailToUserOnPaymentNotice = await SiteSettings.findOne({
+      is_payment_notice_email: true, // Checking if is_welcome_email is true
+    });
+
+    if (sendMailToUserOnPaymentNotice) {
+      const userName = transaction.userName;
+      const user = await UserModel.findOne({ userName: userName });
+      const to = user.email; //  The user's email to send to
+      const subject = `Payment Approved || ${sendMailToUserOnPaymentNotice.domainName}`; // email subject
+      const body = `Hey ${userName}!, \n Your Payment of ${transaction.amount} with payment id ${transaction.paymentId} has been approved`; // email body
+      await sendCustomEmail(to, subject, body); // Sending the email
+    }
+
     res.status(200).json({ message: "Payment Approved" });
-    console.log("Transaction approved successfully.");
   } catch (error) {
     console.error("Error in approving transaction:", error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -120,6 +133,18 @@ export const rejectTransaction = async (req, res) => {
       return res.status(404).json({ message: "Transaction not found" });
     }
 
+    const sendMailToUserOnPaymentNotice = await SiteSettings.findOne({
+      is_payment_notice_email: true, // Checking if is_welcome_email is true
+    });
+
+    if (sendMailToUserOnPaymentNotice) {
+      const userName = transaction.userName;
+      const user = await UserModel.findOne({ userName: userName });
+      const to = user.email; //  The user's email to send to
+      const subject = `Payment Rejected || ${sendMailToUserOnPaymentNotice.domainName}`; // email subject
+      const body = `Hey ${userName}!, \n Your Payment of ${transaction.amount} with payment id ${transaction.paymentId} has been Rejected`; // email body
+      await sendCustomEmail(to, subject, body); // Sending the email
+    }
     res.status(200).json({ message: "Payment Rejected" });
   } catch (error) {
     console.error("Error in Rejecting transaction:", error);

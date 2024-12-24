@@ -35,6 +35,7 @@ function TransactionLogs() {
     fetchTransactions();
   }, []);
   const handleApproveClick = async (transaction) => {
+    setLoad(true);
     try {
       const res = await axios.put(
         `${import.meta.env.VITE_URL}transactionsLogs/admin/approveTransaction/${
@@ -60,7 +61,7 @@ function TransactionLogs() {
   };
 
   const handleRejectClick = async (transaction) => {
-    setLoad(false);
+    setLoad(true);
     try {
       const res = await axios.put(
         `${import.meta.env.VITE_URL}transactionsLogs/admin/rejectTransaction/${
@@ -96,6 +97,7 @@ function TransactionLogs() {
               <th className="fw-medium">No</th>
               <th className="fw-medium">Username</th>
               <th className="fw-medium">Transaction ID</th>
+              <th className="fw-medium">Payment ID</th>
               <th className="fw-medium">Payment method</th>
               <th className="fw-medium">Amount (includes fee)</th>
               <th className="fw-medium">Currency</th>
@@ -110,6 +112,7 @@ function TransactionLogs() {
                 <td>{index + 1}</td>
                 <td>{transaction.userName}</td>
                 <td>{transaction.transactionId}</td>
+                <td>{transaction.paymentId}</td>
                 <td>{transaction.paymentMethod}</td>
                 <td>{transaction.amount}</td>
                 <td>{transaction.currency}</td>
@@ -117,24 +120,28 @@ function TransactionLogs() {
                 <td>{new Date(transaction.createdAt).toLocaleString()}</td>
 
                 <td className="d-flex flex-column align-items-center">
-                  <button
-                    className="btn btn-sm btn-warning mb-2"
-                    title="Approve Payment"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasEdit"
-                    aria-controls="offcanvasRight"
-                    onClick={() => handleApproveClick(transaction)}
-                  >
-                    <FcApproval />
-                  </button>
+                  {transaction?.status === "pending" && (
+                    <>
+                      <button
+                        className="btn btn-sm btn-warning mb-2"
+                        title="Approve Payment"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasEdit"
+                        aria-controls="offcanvasRight"
+                        onClick={() => handleApproveClick(transaction)}
+                      >
+                        <FcApproval />
+                      </button>
 
-                  <button
-                    className="btn btn-sm btn-danger mb-2"
-                    title="Reject Payment"
-                    onClick={() => handleRejectClick(transaction)}
-                  >
-                    <FaBan />
-                  </button>
+                      <button
+                        className="btn btn-sm btn-danger mb-2"
+                        title="Reject Payment"
+                        onClick={() => handleRejectClick(transaction)}
+                      >
+                        <FaBan />
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

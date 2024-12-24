@@ -54,6 +54,7 @@ function WebsiteSettings() {
       siteTitle: data.websiteTitle,
       siteKeyWords: data.websiteKeywords,
       siteDescription: data.websiteDescription,
+      whatsapp_channel: data.whatsappChannel,
     };
 
     try {
@@ -117,7 +118,9 @@ function WebsiteSettings() {
                 })}
               />
               {errors.websiteName && (
-                <span className="text-danger">{errors.domainName.message}</span>
+                <span className="text-danger">
+                  {errors.domainName?.message}
+                </span>
               )}
             </div>
             <div className="form-group">
@@ -134,7 +137,7 @@ function WebsiteSettings() {
               />
               {errors.websiteName && (
                 <span className="text-danger">
-                  {errors.websiteName.message}
+                  {errors.websiteName?.message}
                 </span>
               )}
             </div>
@@ -172,6 +175,17 @@ function WebsiteSettings() {
                 id="websiteTitle"
                 placeholder="Enter website title"
                 {...register("websiteTitle")}
+              />
+            </div>
+            {/* Whatsapp channel */}
+            <div className="form-group">
+              <label htmlFor="websiteTitle">whatsapp Channel</label>
+              <input
+                type="text"
+                className="form-control"
+                id="whatsappChannel"
+                placeholder="Enter whatsappChannel Link"
+                {...register("whatsappChannel")}
               />
             </div>
 

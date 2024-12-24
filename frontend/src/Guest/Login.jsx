@@ -19,8 +19,11 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function Login() {
+  const { siteSettings } = useSiteSettings();
+
   const [load, setLoad] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -45,9 +48,7 @@ function Login() {
 
       // Check if the response contains data and if the token is present
       if (res.data) {
-        console.log(res.data);
         const user = jwtDecode(res.data.token); // Decode JWT to get user info
-        console.log(user);
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("user", JSON.stringify(res.data.user));
         toast.success("User Logged In successfully");
@@ -58,7 +59,7 @@ function Login() {
         }
       }
     } catch (err) {
-      console.log("Error Logging In: ", err);
+      console.err("Error Logging In: ", err);
 
       // Check if the error response exists and has a message
       if (err.response && err.response.data && err.response.data.message) {
@@ -432,7 +433,7 @@ function Login() {
           <p className="text-center">
             All Rights Reserved by &copy;{" "}
             <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              GoToSmm
+              {siteSettings ? siteSettings.domainName : ""}{" "}
             </Link>
           </p>
         </div>

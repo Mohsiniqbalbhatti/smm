@@ -8,7 +8,8 @@ export const generalSetting = async (req, res) => {
       siteName,
       domainName,
       siteDescription,
-      siteKeyWords, // New field for keywords
+      siteKeyWords,
+      whatsapp_channel,
     } = req.body;
 
     // Find the current site settings in the database (assuming there's only one document)
@@ -27,6 +28,7 @@ export const generalSetting = async (req, res) => {
         siteKeyWords:
           siteKeyWords ||
           "SMM panel , cheapest SMM panel , SMM Provider panel , Cheapest Smm Services Provider , Best SMM Panel , Cheap SMM Panel , Indian SMM Panel , SMM reseller panel , cheapest smm reseller panel , instagram panel , smm panel india", // Default keywords if not provided
+        whatsapp_channel: whatsapp_channel || "",
       });
 
       // Save the new settings document
@@ -56,6 +58,9 @@ export const generalSetting = async (req, res) => {
     if (siteKeyWords) {
       siteSettings.siteKeyWords = siteKeyWords; // Update keywords only if provided
     }
+    if (whatsapp_channel) {
+      siteSettings.whatsapp_channel = whatsapp_channel; // Update whatsapp_channel only if provided
+    }
 
     // Save the updated settings
     await siteSettings.save();
@@ -77,7 +82,7 @@ export const sendGeneralSetting = async (req, res) => {
   try {
     // Fetch only the selected fields from the SiteSettings document
     let siteSettings = await SiteSettings.findOne().select(
-      "maintenanceMode siteTitle siteName domainName siteDescription siteKeyWords"
+      "maintenanceMode domainName whatsapp_channel"
     );
 
     // If settings are not found, create a new document with default values
@@ -90,6 +95,7 @@ export const sendGeneralSetting = async (req, res) => {
         siteDescription: "Cheapest SMM Panel in Pakistan & Worldwide! 🔥", // Default description if not provided
         siteKeyWords:
           "SMM panel, cheapest SMM panel, SMM Provider panel, Cheapest SMM Services Provider, Best SMM Panel, Cheap SMM Panel, Indian SMM Panel, SMM reseller panel, cheapest smm reseller panel, instagram panel, smm panel india", // Default keywords if not provided
+        whatsapp_channel: "009999999999", // Default WhatsApp channel if not provided
       });
 
       // Save the new settings document
@@ -101,6 +107,7 @@ export const sendGeneralSetting = async (req, res) => {
         domainName: siteSettings.domainName,
         siteDescription: siteSettings.siteDescription,
         siteKeyWords: siteSettings.siteKeyWords,
+        whatsapp_channel: siteSettings.whatsapp_channel,
       });
     }
 
@@ -112,6 +119,7 @@ export const sendGeneralSetting = async (req, res) => {
       domainName: siteSettings.domainName,
       siteDescription: siteSettings.siteDescription,
       siteKeyWords: siteSettings.siteKeyWords,
+      whatsapp_channel: siteSettings.whatsapp_channel,
     });
   } catch (error) {
     // Handle errors

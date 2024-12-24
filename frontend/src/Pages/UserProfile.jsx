@@ -360,8 +360,11 @@ function UserProfile() {
           </span>
           <input
             type="text"
-            className="form-control p-2 my-2 cursor-pointer "
-            disabled
+            style={{ cursor: "pointer" }}
+            className="form-control p-2 my-2"
+            readOnly
+            onClick={handleCopyApiKey}
+            title="Click to copy API Key"
             placeholder={maskedApi()}
           />
 

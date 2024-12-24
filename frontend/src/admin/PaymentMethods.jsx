@@ -8,6 +8,7 @@ function PaymentMethods() {
   const [methods, setMethods] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(null); // Store the selected method for editing
+  const token = localStorage.getItem("token")?.replace(/^"|"$|'/g, "") || null;
   const {
     register,
     handleSubmit,
@@ -16,11 +17,18 @@ function PaymentMethods() {
   } = useForm();
 
   const fetchPaymentMethods = async () => {
+    console.log("sendPaymentMethods");
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_URL}paymentMethods/getAll`
+        `${import.meta.env.VITE_URL}payments/getAll`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
       );
+      console.log(res);
       if (res.data && Array.isArray(res.data.PaymentMethods)) {
         setMethods(res.data.PaymentMethods);
       }
@@ -56,10 +64,13 @@ function PaymentMethods() {
       updatedMethod.method = data.method;
       // Send updated method to backend
       await axios.put(
-        `${import.meta.env.VITE_URL}paymentMethods/update/${
-          selectedMethod._id
-        }`,
-        updatedMethod
+        `${import.meta.env.VITE_URL}payments/update/${selectedMethod._id}`,
+        updatedMethod,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in Authorization header
+          },
+        }
       );
       fetchPaymentMethods(); // Refresh the payment methods after update
     } catch (error) {

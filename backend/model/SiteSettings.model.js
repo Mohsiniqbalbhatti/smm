@@ -16,7 +16,9 @@ const SiteSettingsSchema = mongoose.Schema({
     required: true,
     default: "siteTitle", // Dummy default value for site title
   },
-
+  whatsapp_channel: {
+    type: String,
+  },
   siteDescription: {
     type: String,
     required: true,

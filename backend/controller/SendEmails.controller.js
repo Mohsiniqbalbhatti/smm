@@ -79,7 +79,6 @@ export const mailSendingFunctionUser = async (userMail, emailFor) => {
 
       // Step 8: Send the email
       await transporter.sendMail(mailOptions);
-      console.log("Email sent successfully");
       return { success: true, message: "Email sent successfully" };
     }
 
@@ -124,7 +123,6 @@ export const mailSendingFunctionUser = async (userMail, emailFor) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
     return { success: true, message: "Email sent successfully" };
   } catch (error) {
     console.error("Error in mailSendingFunctionUser:", error.message);
@@ -226,7 +224,6 @@ export const mailSendingFunctionAdmin = async (emailFor) => {
 
     // Step 7: Send the email
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
     return { success: true, message: "Email sent successfully" };
   } catch (error) {
     console.error("Error in mailSendingFunctionUser:", error.message);
@@ -247,6 +244,7 @@ export const sendCustomEmail = async (to, subject, body) => {
       throw new Error("Site settings or email credentials are missing");
     }
 
+    // Fetch email template from site settings
     // Create transporter for sending emails
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -265,7 +263,6 @@ export const sendCustomEmail = async (to, subject, body) => {
 
     // Send email
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
     return { success: true, message: "Email sent successfully" };
   } catch (error) {
     console.error("Error sending email:", error);

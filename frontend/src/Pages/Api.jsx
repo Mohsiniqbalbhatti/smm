@@ -1,36 +1,39 @@
 import React from "react";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function Api() {
+  const { siteSettings } = useSiteSettings();
+
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid mt-5">
         <div className="row">
           <div className="col-12">
             <h3>Api</h3>
-            <div className="row d-flex justify-content-between my-2">
-              <div className="col card p-2 me-2">
-                <div className="card-title d-flex justify-content-between px-4">
+            <div className="row d-flex justify-content-between ">
+              <div className="col-md col-12 bg-300 my-2 my-md-0 rounded p-2 me-2">
+                <div className=" d-flex justify-content-between px-4">
                   HTTP Method <span className="fw-normal">Post</span>
                 </div>
               </div>
-              <div className="col card p-2">
-                <div className="card-title d-flex justify-content-between px-4">
+              <div className="col-md col-12 my-2 my-md-0 bg-300 rounded p-2">
+                <div className=" d-flex justify-content-between px-4">
                   <span className="fw-normal">
                     {" "}
-                    https://bestexpertz.com/api/v2
+                    https://{siteSettings?.domainName}/api/v2
                   </span>
                 </div>
               </div>
             </div>
             <div className="row d-flex justify-content-between my-2">
-              <div className="col card p-2 me-2">
-                <div className="card-title d-flex justify-content-between px-4">
+              <div className="col-md col-12 bg-300 my-2 my-md-0 bg-300 rounded p-2 me-2">
+                <div className=" d-flex justify-content-between px-4">
                   Api Key <span className="fw-normal">Click Here</span>
                 </div>
               </div>
-              <div className="col card p-2">
-                <div className="card-title d-flex justify-content-between px-4">
-                  HTTP Method <span>Post</span>
+              <div className="col-md col-12 bg-300 my-2 my-md-0 bg-300 rounded p-2">
+                <div className=" d-flex justify-content-between px-4">
+                  Response Format <span>JSON</span>
                 </div>
               </div>
             </div>

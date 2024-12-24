@@ -23,14 +23,16 @@ const ConditionalProviders = ({ children }) => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <CurrencyProvider>
-        <GoogleOAuthProvider clientId={googleClientId}>
-          <ConditionalProviders>
-            <RouterProvider router={router} />
-          </ConditionalProviders>
-        </GoogleOAuthProvider>
-      </CurrencyProvider>
-    </AuthProvider>
+    <SiteSettingsProvider>
+      <AuthProvider>
+        <CurrencyProvider>
+          <GoogleOAuthProvider clientId={googleClientId}>
+            <ConditionalProviders>
+              <RouterProvider router={router} />
+            </ConditionalProviders>
+          </GoogleOAuthProvider>
+        </CurrencyProvider>
+      </AuthProvider>
+    </SiteSettingsProvider>
   </React.StrictMode>
 );

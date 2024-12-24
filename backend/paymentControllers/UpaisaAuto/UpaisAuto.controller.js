@@ -18,22 +18,22 @@ export const addUPaisaAutoPayment = async (req, res) => {
     ); // Confirm parsed transaction details
 
     const existingTrnasactionId = await transaction.findOne({
-      trasactionId: transactionId,
+      transactionId: transactionId,
     });
     if (existingTrnasactionId) {
-      console.log("Transaction already exists. Skipping.");
-      return res.status(200).json({
+      // console.log("Transaction already exists. Skipping.");
+      return res.status(202).json({
         message: "Transaction Id already Exist",
       });
     }
 
     // Fetch the latest email
     const emailBody = await fetchLatestEmail();
-    console.log("Fetched latest email content:", emailBody); // Log the email content for verification
+    // console.log("Fetched latest email content:", emailBody); // Log the email content for verification
 
     // Check if email was found
     if (!emailBody) {
-      console.log("No email found. Adding transaction with pending status.");
+      // console.log("No email found. Adding transaction with pending status.");
 
       // Create a transaction with pending status when email is not found
       await addPendingTransaction(
@@ -51,18 +51,18 @@ export const addUPaisaAutoPayment = async (req, res) => {
     // Extract the transaction ID and amount from the email body
     const { extractedTransactionId, extractedAmount } =
       extractTransactionDetails(emailBody);
-    console.log(
-      "Extracted transaction ID from email:",
-      extractedTransactionId,
-      "Extracted amount from email:",
-      extractedAmount
-    ); // Log extracted values for comparison
+    // console.log(
+    //   "Extracted transaction ID from email:",
+    //   extractedTransactionId,
+    //   "Extracted amount from email:",
+    //   extractedAmount
+    // ); // Log extracted values for comparison
 
     // Check if the extracted details are found
     if (!extractedTransactionId || !extractedAmount) {
-      console.log(
-        "Transaction details not found in email. Adding transaction with pending status."
-      );
+      // console.log(
+      //   "Transaction details not found in email. Adding transaction with pending status."
+      // );
 
       // Create a transaction with pending status when details are not found in the email
       await addPendingTransaction(
@@ -106,15 +106,15 @@ export const addUPaisaAutoPayment = async (req, res) => {
         await UserModel.findByIdAndUpdate(user._id, {
           balance: newBalanceInUSD,
         }); // Update balance with new value
-        console.log(
-          "Funds added successfully.",
-          "User:",
-          userName,
-          "New balance added:",
-          parseFloat(extractedAmount),
-          "Updated balance in USD:",
-          newBalanceInUSD
-        );
+        // console.log(
+        //   "Funds added successfully.",
+        //   "User:",
+        //   userName,
+        //   "New balance added:",
+        //   parseFloat(extractedAmount),
+        //   "Updated balance in USD:",
+        //   newBalanceInUSD
+        // );
 
         // Create transaction with success status
         const newTransaction = new transaction({
@@ -134,9 +134,9 @@ export const addUPaisaAutoPayment = async (req, res) => {
         return res.status(404).json({ message: "User not found" });
       }
     } else {
-      console.log(
-        "Transaction ID or amount mismatch. No transaction history created."
-      );
+      // console.log(
+      //   "Transaction ID or amount mismatch. No transaction history created."
+      // );
 
       // Do not create a transaction with pending status if transaction ID or amount does not match
       return res.status(400).json({
@@ -194,7 +194,7 @@ const fetchLatestEmail = async () => {
     const imapClient = new imap(imapConfig);
 
     imapClient.once("ready", () => {
-      console.log("IMAP client connected and ready.");
+      // console.log("IMAP client connected and ready.");
       imapClient.openBox("INBOX", false, (err, box) => {
         if (err) {
           console.error("Error opening inbox:", err);
@@ -212,7 +212,7 @@ const fetchLatestEmail = async () => {
           }
 
           if (!results.length) {
-            console.log("No unread emails found.");
+            // console.log("No unread emails found.");
             return resolve(null);
           }
 
@@ -223,7 +223,7 @@ const fetchLatestEmail = async () => {
           });
 
           fetch.on("message", (msg, seqno) => {
-            console.log(`Fetching message #${seqno}...`);
+            // console.log(`Fetching message #${seqno}...`);
             msg.on("body", (stream) => {
               let emailData = "";
               let dataLogged = false;
@@ -233,18 +233,18 @@ const fetchLatestEmail = async () => {
 
                 // Log the msg object to inspect its structure
                 if (!dataLogged) {
-                  console.log("msg object:", msg); // Log full message object for inspection
+                  // console.log("msg object:", msg); // Log full message object for inspection
                   dataLogged = true;
                 }
               });
 
               stream.on("end", () => {
-                console.log("Email fetch completed.");
+                // console.log("Email fetch completed.");
 
                 // Safely access subject and check for '[SMSForwarder]'
                 const subject = msg.headers ? msg.headers.subject : null;
                 if (subject && subject.includes("[SMSForwarder]")) {
-                  console.log("Subject matches, marking email as seen...");
+                  // console.log("Subject matches, marking email as seen...");
                   imapClient.addFlags(seqno, "\\Seen", (err) => {
                     if (err) {
                       console.error("Error marking as seen:", err);
@@ -258,7 +258,7 @@ const fetchLatestEmail = async () => {
           });
 
           fetch.once("end", () => {
-            console.log("All messages fetched.");
+            // console.log("All messages fetched.");
             imapClient.end();
           });
         });
@@ -276,15 +276,15 @@ const fetchLatestEmail = async () => {
 
 // Function to extract transaction details from the email body using regex
 const extractTransactionDetails = (emailBody) => {
-  console.log("Extracting transaction details from email body..."); // Log start of extraction
-  console.log("Email for extraction is:", emailBody); // Log full email content for verification
+  // console.log("Extracting transaction details from email body..."); // Log start of extraction
+  // console.log("Email for extraction is:", emailBody); // Log full email content for verification
 
   // Regex pattern to match the transaction ID and amount in the format you provided
   const regex = /You have received Rs\s([\d,]+\.\d{2})\s.*TID\s(\d{12,})/;
   const match = emailBody.match(regex);
 
   if (match) {
-    console.log("Transaction details extracted successfully."); // Log successful extraction
+    // console.log("Transaction details extracted successfully."); // Log successful extraction
     return {
       extractedAmount: match[1], // Amount
       extractedTransactionId: match[2], // Transaction ID
@@ -360,7 +360,7 @@ export const mailSendingFunctionAdmin = async (
 
     // Step 7: Send the email
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully to admin");
+    // console.log("Email sent successfully to admin");
     return { success: true, message: "Email sent successfully to admin" };
   } catch (error) {
     console.error("Error in mailSendingFunctionUser:", error.message);

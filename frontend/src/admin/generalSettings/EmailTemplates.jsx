@@ -50,33 +50,35 @@ function EmailTemplates() {
         }
       );
       const fetchedTemplates = response.data;
-      console.log(response.data);
-      if (response.data) {
-        toast.success("Templates fetched");
-      }
+      console.log("Fetched Templates:", fetchedTemplates); // Debug log
 
-      setTemplates({
-        newUserWelcome: {
-          subject: fetchedTemplates.newUserWelcomeEmail.subject,
-          body: fetchedTemplates.newUserWelcomeEmail.body,
-        },
-        newUserNotification: {
-          subject: fetchedTemplates.newUserNotificationEmail.subject,
-          body: fetchedTemplates.newUserNotificationEmail.body,
-        },
-        passwordRecovery: {
-          subject: fetchedTemplates.passwordRecoveryEmail.subject,
-          body: fetchedTemplates.passwordRecoveryEmail.body,
-        },
-        paymentNotification: {
-          subject: fetchedTemplates.paymentNotificationEmail.subject,
-          body: fetchedTemplates.paymentNotificationEmail.body,
-        },
-        emailVerification: {
-          subject: fetchedTemplates.emailVerificationEmail.subject,
-          body: fetchedTemplates.emailVerificationEmail.body,
-        },
-      });
+      if (fetchedTemplates) {
+        toast.success("Templates fetched");
+
+        // Ensure body is a valid string and not undefined
+        setTemplates({
+          newUserWelcome: {
+            subject: fetchedTemplates.newUserWelcomeEmail.subject,
+            body: fetchedTemplates.newUserWelcomeEmail.body,
+          },
+          newUserNotification: {
+            subject: fetchedTemplates.newUserNotificationEmail.subject,
+            body: fetchedTemplates.newUserNotificationEmail.body,
+          },
+          passwordRecovery: {
+            subject: fetchedTemplates.passwordRecoveryEmail.subject,
+            body: fetchedTemplates.passwordRecoveryEmail.body,
+          },
+          paymentNotification: {
+            subject: fetchedTemplates.paymentNotificationEmail.subject,
+            body: fetchedTemplates.paymentNotificationEmail.body,
+          },
+          emailVerification: {
+            subject: fetchedTemplates.emailVerificationEmail.subject,
+            body: fetchedTemplates.emailVerificationEmail.body,
+          },
+        });
+      }
     } catch (error) {
       console.error("Error fetching email templates:", error);
     }

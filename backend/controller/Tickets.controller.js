@@ -1,6 +1,8 @@
 import UserModel from "../model/User.model.js";
 import TicketSchema from "../model/Tickets.model.js";
 import Ticket from "../model/Tickets.model.js";
+import { sendCustomEmail } from "./SendEmails.controller.js";
+import SiteSettings from "../model/SiteSettings.model.js";
 
 export const createNewTicket = async (req, res) => {
   try {
@@ -42,6 +44,25 @@ export const createNewTicket = async (req, res) => {
     // Save the ticket to the database
     const savedTicket = await newTicket.save();
 
+    // send mail to the user and admin
+    const sendMailToUserOnTicket = await SiteSettings.findOne({
+      is_ticket_notice_email: true, // Checking if is_ticket_notice_email is true
+      is_ticket_notice_email_admin: true, // Checking if is_ticket_notice_email is true
+    });
+    // send mail to user
+    if (sendMailToUserOnTicket) {
+      const to = user.email; //  The user's email to send to
+      const subject = `Ticket Created  || ${sendMailToUserOnTicket.domainName}`; // email subject
+      const body = `Hey ${user.userName}!, \n You have successfully created the ticket.\n Kindly have patience you will get the reply as soon as possible from our team.`; // email body
+      await sendCustomEmail(to, subject, body); // Sending the email
+    }
+    // send mail to admin
+    if (sendMailToUserOnTicket.is_ticket_notice_email_admin) {
+      const to = sendMailToUserOnTicket.email_from; //  The user's email to send to
+      const subject = `New Ticket Created  || ${sendMailToUserOnTicket.domainName}`; // email subject
+      const body = `Hey Admin! \n There is a new Ticket Created.\n Kindly Check it out as soon as possible.`; // email body
+      await sendCustomEmail(to, subject, body); // Sending the email
+    }
     // Respond with the created ticket
     return res.status(201).json({
       message: "Ticket created successfully.",
@@ -106,6 +127,23 @@ export const updateTicketByTicketId = async (req, res) => {
     const ticket = await Ticket.findOne({ ticketId });
     if (!ticket) {
       return res.status(404).json({ message: "Ticket not found" });
+    }
+
+    // send mail to admin and user if status is updated
+    if (status && ticket.status !== status) {
+      // send mail to the user and admin
+      const sendMailToUserOnTicket = await SiteSettings.findOne({
+        is_ticket_notice_email: true, // Checking if is_ticket_notice_email is true
+      });
+      // send mail to user
+      if (sendMailToUserOnTicket) {
+        const to = ticket.userEmail; //  The user's email to send to
+        const subject = `Ticket Status Updated  || ${sendMailToUserOnTicket.domainName}`; // email subject
+        const body = `Hey ${ticket.userName}!, \n The status of your Ticket ${ticket?.ticketId} has been updated to ${status}.`; // email body
+        await sendCustomEmail(to, subject, body); // Sending the email
+      }
+
+      ticket.status = status;
     }
 
     // Update the status if provided

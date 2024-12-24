@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 function Navbar() {
+  const { siteSettings } = useSiteSettings();
   return (
     <header>
       <nav className="navbar navbar-expand-lg bg-2 nav-guest py-2 fixed-top">
@@ -60,7 +62,7 @@ function Navbar() {
               <li className="nav-item py-2 py-lg-0">
                 <a
                   className="link-nav"
-                  href="https://whatsapp.com/channel/0029VaYLBIIJENxtYWafOE3E"
+                  href={siteSettings?.whatsapp_channel}
                   target="_blank"
                 >
                   WhatsApp Channel

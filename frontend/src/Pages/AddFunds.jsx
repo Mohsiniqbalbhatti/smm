@@ -61,7 +61,6 @@ function AddFunds() {
 
       if (response.data) {
         setTransactions(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching transactions:", error); // Log the error
@@ -72,7 +71,6 @@ function AddFunds() {
   useEffect(() => {
     fetchUsersTransactions();
     fetchMethods();
-    console.log("selectedMethod", selectedMethod);
   }, []);
 
   const handleMethodChange = (e) => {
@@ -89,7 +87,6 @@ function AddFunds() {
       return;
     }
 
-    console.log("selectedMethod", selectedMethod.routeName);
     setLoad(true);
     try {
       const paymentInfo = {
@@ -125,7 +122,7 @@ function AddFunds() {
       } else if (res.status === 400) {
         toast.error("Transaction ID or amount mismatch!");
       } else if (res.status === 202) {
-        toast.success(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
       console.error("Error in payment:", error);
