@@ -36,7 +36,8 @@ function App() {
             <div className="col-3 d-none d-lg-block">
               <SideBar />
             </div>
-            <div className="col-12 col-lg-9" style={{ marginTop: "150px" }}>
+            <div className="col-12 col-lg-9 mt-10">
+              {" "}
               <Outlet />
             </div>
           </div>

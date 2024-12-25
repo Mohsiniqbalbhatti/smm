@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import {
-  FaBell,
-  FaUserAlt,
-  FaCoins,
-  FaCaretDown,
-  FaUserShield,
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaInfoCircle,
-} from "react-icons/fa";
+import { FaBell, FaUserAlt, FaCoins, FaUserShield } from "react-icons/fa";
 import { useCurrency } from "../context/CurrencyContext";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
@@ -66,7 +57,7 @@ function Navbar() {
 
   return (
     <nav className="navbar bg-body-tertiary fixed-top ">
-      {/* {load && <Loader />} */}
+      {load && <Loader />}
       <div className="w-100">
         <div className="row d-flex">
           <div className="col-12 col-lg-3 d-flex justify-content-between">
