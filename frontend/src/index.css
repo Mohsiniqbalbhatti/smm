@@ -609,7 +609,9 @@ td {
   margin-block: 10px;
   border-radius: 20px;
 }
-
+.mt-10 {
+  margin-top: 100px;
+}
 @media screen and (max-width: 992px) {
   .mt-10 {
     margin-top: 150px;
