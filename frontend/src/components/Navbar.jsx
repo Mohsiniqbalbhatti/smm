@@ -65,7 +65,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar bg-body-tertiary fixed-top">
+    <nav className="navbar bg-body-tertiary fixed-top ">
       {/* {load && <Loader />} */}
       <div className="w-100">
         <div className="row d-flex">

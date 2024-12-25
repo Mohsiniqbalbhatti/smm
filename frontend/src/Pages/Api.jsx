@@ -6,7 +6,7 @@ function Api() {
 
   return (
     <div>
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-2">
         <div className="row">
           <div className="col-12">
             <h3>Api</h3>

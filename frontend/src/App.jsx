@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import SideBar from "./components/SideBar";
 import { Outlet } from "react-router-dom";
@@ -30,13 +30,13 @@ function App() {
         <div className="container-fluid">
           <Toaster />
           <div className="row">
-            <div className="col-12">
+            <div className="col-12 ">
               <Navbar />
             </div>
             <div className="col-3 d-none d-lg-block">
               <SideBar />
             </div>
-            <div className="col-12 col-lg-9" style={{ marginTop: "90px" }}>
+            <div className="col-12 col-lg-9 mb-5 mb-lg-0">
               <Outlet />
             </div>
           </div>
