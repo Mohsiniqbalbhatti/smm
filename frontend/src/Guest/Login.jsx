@@ -48,7 +48,6 @@ function Login() {
 
       // Check if the response contains data and if the token is present
       if (res.data) {
-        const user = jwtDecode(res.data.token); // Decode JWT to get user info
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("user", JSON.stringify(res.data.user));
         toast.success("User Logged In successfully");
