@@ -183,9 +183,6 @@ function Navbar() {
           aria-labelledby="offcanvasNavbarLabel"
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-              OWAIS SMM
-            </h5>
             <button
               type="button"
               className="btn-close"
