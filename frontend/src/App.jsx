@@ -29,10 +29,10 @@ function App() {
                 href={`https://wa.me/${siteSettings?.whatsapp_number}`} // Replace with your WhatsApp number
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-success position-fixed bottom-0 end-0 mb-4 me-4 rounded-circle p-3"
+                className="btn btn-success position-fixed bottom-0 end-0 mb-4 me-4 rounded-circle p-2"
                 style={{ zIndex: 1000 }}
               >
-                <IoLogoWhatsapp style={{ fontSize: "35px" }} />
+                <IoLogoWhatsapp style={{ fontSize: "36px" }} />
               </a>
             </div>
           </div>
