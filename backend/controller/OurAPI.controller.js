@@ -7,7 +7,15 @@ import cron from "node-cron";
 
 // Main API handler
 export const handleAPIRequest = async (req, res) => {
-  const { key, action } = req.body;
+  // Destructure key and action from req.body or req.params
+  const requestData = { ...req.query, ...req.body, ...req.params };
+
+  // Destructure key and action from the combined object
+  const { key, action } = requestData;
+
+  console.log("key: ", key);
+  console.log("action: ", action);
+
   try {
     const user = await validateApiKey(key); // Validate API Key
 

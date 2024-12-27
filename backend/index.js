@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import session from "express-session"; // Import express-session
 import passport from "passport"; // Import Passport
 import cors from "cors";
+import bodyParser from "body-parser";
 import path from "path"; // Import path for handling file paths
 import connectDB from "./config/database.js"; // Import the connectDB function
 import apiListRouter from "./router/ApiList.router.js";
@@ -50,7 +51,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use("/siteSettings", siteSettingsRouter);
 app.use("/admin/ApiList", apiListRouter);

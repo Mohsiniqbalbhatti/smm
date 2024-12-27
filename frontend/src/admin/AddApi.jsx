@@ -116,7 +116,6 @@ function AddApi() {
   };
 
   const handleEditClick = (api) => {
-    console.log("Api clicked", api);
     setSelectedApi(api);
   };
 
