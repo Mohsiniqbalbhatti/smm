@@ -2,16 +2,8 @@ import SiteSettings from "../model/SiteSettings.model.js";
 // update general setting
 export const generalSetting = async (req, res) => {
   try {
-    const {
-      maintenanceMode,
-      siteTitle,
-      siteName,
-      domainName,
-      siteDescription,
-      siteKeyWords,
-      whatsapp_channel,
-      whatsapp_number,
-    } = req.body;
+    const { maintenanceMode, domainName, whatsapp_channel, whatsapp_number } =
+      req.body;
 
     // Find the current site settings in the database (assuming there's only one document)
     let siteSettings = await SiteSettings.findOne();
@@ -21,14 +13,7 @@ export const generalSetting = async (req, res) => {
       siteSettings = new SiteSettings({
         maintenanceMode:
           maintenanceMode !== undefined ? maintenanceMode : false, // Default to false if not provided
-        siteTitle: siteTitle || "Default Site Title", // Default site title if not provided
-        siteName: siteName || "Default Site Name", // Default site name if not provided
         domainName: domainName || "Default Domain Name", // Default site name if not provided
-        siteDescription:
-          siteDescription || "Cheapest SMM Panel in Pakistan & Worldwide! 🔥", // Default description if not provided
-        siteKeyWords:
-          siteKeyWords ||
-          "SMM panel , cheapest SMM panel , SMM Provider panel , Cheapest Smm Services Provider , Best SMM Panel , Cheap SMM Panel , Indian SMM Panel , SMM reseller panel , cheapest smm reseller panel , instagram panel , smm panel india", // Default keywords if not provided
         whatsapp_channel: whatsapp_channel || "",
         whatsapp_number: whatsapp_number || "+9212345678",
       });
@@ -45,20 +30,8 @@ export const generalSetting = async (req, res) => {
     if (maintenanceMode !== undefined) {
       siteSettings.maintenanceMode = maintenanceMode; // Update only if provided
     }
-    if (siteTitle) {
-      siteSettings.siteTitle = siteTitle; // Update title only if it's provided
-    }
-    if (siteName) {
-      siteSettings.siteName = siteName; // Update name only if it's provided
-    }
     if (domainName) {
       siteSettings.domainName = domainName; // Update name only if it's provided
-    }
-    if (siteDescription) {
-      siteSettings.siteDescription = siteDescription; // Update description only if provided
-    }
-    if (siteKeyWords) {
-      siteSettings.siteKeyWords = siteKeyWords; // Update keywords only if provided
     }
     if (whatsapp_channel) {
       siteSettings.whatsapp_channel = whatsapp_channel; // Update whatsapp_channel only if provided
@@ -94,12 +67,7 @@ export const sendGeneralSetting = async (req, res) => {
     if (!siteSettings) {
       siteSettings = new SiteSettings({
         maintenanceMode: false, // Default to false if not provided
-        siteTitle: "Default Site Title", // Default site title if not provided
-        siteName: "Default Site Name", // Default site name if not provided
         domainName: "Default Domain Name", // Default site name if not provided
-        siteDescription: "Cheapest SMM Panel in Pakistan & Worldwide! 🔥", // Default description if not provided
-        siteKeyWords:
-          "SMM panel, cheapest SMM panel, SMM Provider panel, Cheapest SMM Services Provider, Best SMM Panel, Cheap SMM Panel, Indian SMM Panel, SMM reseller panel, cheapest smm reseller panel, instagram panel, smm panel india", // Default keywords if not provided
         whatsapp_channel: "009999999999",
         whatsapp_number: "+9212345678", // Default WhatsApp channel if not provided
       });
@@ -108,11 +76,7 @@ export const sendGeneralSetting = async (req, res) => {
       await siteSettings.save();
       return res.status(200).json({
         maintenanceMode: siteSettings.maintenanceMode,
-        siteTitle: siteSettings.siteTitle,
-        siteName: siteSettings.siteName,
         domainName: siteSettings.domainName,
-        siteDescription: siteSettings.siteDescription,
-        siteKeyWords: siteSettings.siteKeyWords,
         whatsapp_channel: siteSettings.whatsapp_channel,
         whatsapp_number: siteSettings.whatsapp_number,
       });
@@ -121,11 +85,7 @@ export const sendGeneralSetting = async (req, res) => {
     // Send back only the selected fields as a response
     res.status(200).json({
       maintenanceMode: siteSettings.maintenanceMode,
-      siteTitle: siteSettings.siteTitle,
-      siteName: siteSettings.siteName,
       domainName: siteSettings.domainName,
-      siteDescription: siteSettings.siteDescription,
-      siteKeyWords: siteSettings.siteKeyWords,
       whatsapp_channel: siteSettings.whatsapp_channel,
       whatsapp_number: siteSettings.whatsapp_number,
     });

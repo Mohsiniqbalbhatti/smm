@@ -27,12 +27,10 @@ function WebsiteSettings() {
       const settings = response.data;
       setSettings(response.data);
       // Set default values in the form
-      setValue("maintenanceMode", settings.maintenanceMode);
       setValue("domainName", settings.domainName);
-      setValue("websiteName", settings.siteName);
-      setValue("websiteTitle", settings.siteTitle);
-      setValue("websiteDescription", settings.siteDescription);
-      setValue("websiteKeywords", settings.siteKeyWords);
+      setValue("maintenanceMode", settings.maintenanceMode);
+      setValue("whatsappChannel", settings.whatsapp_channel);
+      setValue("whatsappNumber", settings.whatsapp_number);
     } catch (error) {
       console.error("Error fetching general settings:", error);
     } finally {
@@ -49,11 +47,7 @@ function WebsiteSettings() {
     setLoad(true);
     const generalSiteData = {
       maintenanceMode: data.maintenanceMode,
-      siteName: data.websiteName,
       domainName: data.domainName,
-      siteTitle: data.websiteTitle,
-      siteKeyWords: data.websiteKeywords,
-      siteDescription: data.websiteDescription,
       whatsapp_channel: data.whatsappChannel,
       whatsapp_number: data.whatsappNumber,
     };
@@ -97,18 +91,20 @@ function WebsiteSettings() {
                 {...register("maintenanceMode")}
               />
               <br />
-              <label htmlFor="flexSwitchCheckDefault">
+              <label htmlFor="flexSwitchCheckDefault">Maintainess Mode</label>
+              <p>
+                {" "}
                 <strong>Note:</strong> Make sure you remember this link to get
                 access to Maintenance mode before you activate:
                 <strong>
                   {`https://${settings.domainName}/maintenance/access`}{" "}
                 </strong>
-              </label>
+              </p>
             </div>
 
-            {/* Website Name */}
+            {/* Domain Name */}
             <div className="form-group">
-              <label htmlFor="websiteName">Domain Name</label>
+              <label htmlFor="domainName">Domain Name</label>
               <input
                 type="text"
                 className="form-control"
@@ -124,60 +120,7 @@ function WebsiteSettings() {
                 </span>
               )}
             </div>
-            <div className="form-group">
-              {" "}
-              <label htmlFor="websiteName">Website Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="websiteName"
-                placeholder="e.g., smmPannel.com: Best and Cheapest SMM Service Provider in World"
-                {...register("websiteName", {
-                  required: "Website name is required",
-                })}
-              />
-              {errors.websiteName && (
-                <span className="text-danger">
-                  {errors.websiteName?.message}
-                </span>
-              )}
-            </div>
 
-            {/* Website Description */}
-            <div className="form-group">
-              <label htmlFor="websiteDescription">Website Description</label>
-              <textarea
-                className="form-control"
-                id="websiteDescription"
-                rows="3"
-                placeholder="Enter website description here"
-                {...register("websiteDescription")}
-              ></textarea>
-            </div>
-
-            {/* Website Keywords */}
-            <div className="form-group">
-              <label htmlFor="websiteKeywords">Website Keywords</label>
-              <textarea
-                className="form-control"
-                id="websiteKeywords"
-                rows="3"
-                placeholder="Enter website keywords here"
-                {...register("websiteKeywords")}
-              ></textarea>
-            </div>
-
-            {/* Website Title */}
-            <div className="form-group">
-              <label htmlFor="websiteTitle">Website Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="websiteTitle"
-                placeholder="Enter website title"
-                {...register("websiteTitle")}
-              />
-            </div>
             {/* Whatsapp channel */}
             <div className="form-group">
               <label htmlFor="websiteTitle">whatsapp Channel</label>
@@ -189,7 +132,7 @@ function WebsiteSettings() {
                 {...register("whatsappChannel")}
               />
             </div>
-            {/* Whatsapp channel */}
+            {/* Whatsapp Number */}
             <div className="form-group">
               <label htmlFor="websiteTitle">whatsapp Number</label>
               <input
