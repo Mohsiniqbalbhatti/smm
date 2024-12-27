@@ -29,6 +29,7 @@ export const generalSetting = async (req, res) => {
           siteKeyWords ||
           "SMM panel , cheapest SMM panel , SMM Provider panel , Cheapest Smm Services Provider , Best SMM Panel , Cheap SMM Panel , Indian SMM Panel , SMM reseller panel , cheapest smm reseller panel , instagram panel , smm panel india", // Default keywords if not provided
         whatsapp_channel: whatsapp_channel || "",
+        whatsapp_number: whatsapp_number || "+9212345678",
       });
 
       // Save the new settings document
@@ -60,6 +61,9 @@ export const generalSetting = async (req, res) => {
     }
     if (whatsapp_channel) {
       siteSettings.whatsapp_channel = whatsapp_channel; // Update whatsapp_channel only if provided
+    }
+    if (whatsapp_number) {
+      siteSettings.whatsapp_number = whatsapp_number; // Update whatsapp_channel only if provided
     }
 
     // Save the updated settings

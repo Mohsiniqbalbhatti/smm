@@ -55,6 +55,7 @@ function WebsiteSettings() {
       siteKeyWords: data.websiteKeywords,
       siteDescription: data.websiteDescription,
       whatsapp_channel: data.whatsappChannel,
+      whatsapp_number: data.whatsappNumber,
     };
 
     try {
@@ -186,6 +187,17 @@ function WebsiteSettings() {
                 id="whatsappChannel"
                 placeholder="Enter whatsappChannel Link"
                 {...register("whatsappChannel")}
+              />
+            </div>
+            {/* Whatsapp channel */}
+            <div className="form-group">
+              <label htmlFor="websiteTitle">whatsapp Number</label>
+              <input
+                type="text"
+                className="form-control"
+                id="whatsappNumber"
+                placeholder="Enter whatsapp Number"
+                {...register("whatsappNumber")}
               />
             </div>
 

@@ -126,11 +126,45 @@ function Api() {
                 <h5>Example Response</h5>
                 <div className="bg-200 p-3 rounded text-danger fw-semibold">
                   <p>
+                    {"["}
+                    <br />
                     {"{"}
                     <br />
-                    "order": 23501
+                    "service": 1,
+                    <br />
+                    "name": "Followers",
+                    <br />
+                    "type": "Default",
+                    <br />
+                    "category": "First Category",
+                    <br />
+                    "rate": "0.90",
+                    <br />
+                    "min": "50",
+                    <br />
+                    "max": "10000"
+                    <br />
+                    {"},"}
+                    <br />
+                    {"{"}
+                    <br />
+                    "service": 2,
+                    <br />
+                    "name": "Comments",
+                    <br />
+                    "type": "Custom Comments",
+                    <br />
+                    "category": "Second Category",
+                    <br />
+                    "rate": "8",
+                    <br />
+                    "min": "10",
+                    <br />
+                    "max": "1500"
                     <br />
                     {"}"}
+                    <br />
+                    {"]"}
                   </p>
                 </div>
               </div>

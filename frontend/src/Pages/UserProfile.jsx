@@ -14,6 +14,7 @@ function UserProfile() {
   const [apiKey, setApiKey] = useState(null);
   const [load, setLoad] = useState(false); // State to handle loading
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showCurrentPassword1, setShowCurrentPassword1] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -132,6 +133,9 @@ function UserProfile() {
   };
   const toggleCurrentPasswordVisibility = () => {
     setShowCurrentPassword(!showCurrentPassword);
+  };
+  const toggleCurrentPasswordVisibility1 = () => {
+    setShowCurrentPassword1(!showCurrentPassword1);
   };
   const toggleNewPasswordVisibility = () => {
     setShowNewPassword(!showNewPassword);
@@ -257,7 +261,7 @@ function UserProfile() {
             <div className="mb-3 position-relative">
               <label>Current Password</label>
               <input
-                type={!showCurrentPassword ? "password" : "text"}
+                type={!showCurrentPassword1 ? "password" : "text"}
                 className={`form-control p-2 ${
                   errorsPasswordChange.password ? "is-invalid" : ""
                 }`}
@@ -271,8 +275,8 @@ function UserProfile() {
                   {errorsPasswordChange.password.message}
                 </div>
               )}
-              <span style={eyeplace} onClick={toggleCurrentPasswordVisibility}>
-                {!showCurrentPassword ? <FaRegEyeSlash /> : <FaEye />}
+              <span style={eyeplace} onClick={toggleCurrentPasswordVisibility1}>
+                {!showCurrentPassword1 ? <FaRegEyeSlash /> : <FaEye />}
               </span>
             </div>
 

@@ -19,6 +19,9 @@ const SiteSettingsSchema = mongoose.Schema({
   whatsapp_channel: {
     type: String,
   },
+  whatsapp_number: {
+    type: String,
+  },
   siteDescription: {
     type: String,
     required: true,

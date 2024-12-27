@@ -19,11 +19,7 @@ function Maintenance() {
         <p className="text-muted">
           We should to be back shortly. Thank you for your patience!
         </p>
-        <Link className="btn btn-main mt-2" to={"/maintenance/access"}>
-          Login If you are the admin
-        </Link>
       </div>
-      /maintenance/access
     </div>
   );
 }

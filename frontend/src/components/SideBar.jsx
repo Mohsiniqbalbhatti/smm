@@ -47,7 +47,7 @@ function SideBar() {
           {authUser.role === "admin" ? (
             <>
               <div className="dropdown">
-                <a
+                <button
                   href="#"
                   className="nav-link dropdown-toggle"
                   id="adminDropdown"
@@ -57,7 +57,7 @@ function SideBar() {
                 >
                   <FaUserShield className="fs-4 fw-bold pe-2" />
                   Admin
-                </a>
+                </button>
                 <ul className="dropdown-menu" aria-labelledby="adminDropdown">
                   <li>
                     <Link to="/admin/ApiProviders" className="dropdown-item">
