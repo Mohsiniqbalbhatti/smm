@@ -75,6 +75,8 @@ app.use("/ticket", ticketRouter);
 app.use("/api", apiRouter);
 app.use("/userManagement", UserManagementRouter);
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, "public")));
 // Serve React Frontend from 'dist'
 const __dirname = path.resolve(); // For ES modules
 app.use(express.static(path.join(__dirname, "dist"))); // Serve static files
