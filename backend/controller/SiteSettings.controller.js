@@ -59,11 +59,8 @@ export const generalSetting = async (req, res) => {
 export const sendGeneralSetting = async (req, res) => {
   try {
     // Fetch only the selected fields from the SiteSettings document
-    let siteSettings = await SiteSettings.findOne().select(
-      "maintenanceMode domainName whatsapp_channel whatsapp_number"
-    );
+    let siteSettings = await SiteSettings.findOne();
     console.log("sendGeneralSetting", siteSettings);
-
     // If settings are not found, create a new document with default values
     if (!siteSettings) {
       siteSettings = new SiteSettings({
