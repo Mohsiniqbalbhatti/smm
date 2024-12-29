@@ -266,11 +266,7 @@ function Navbar() {
                         Services
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/admin/services" className="dropdown-item">
-                        Services
-                      </Link>
-                    </li>
+
                     <li>
                       <Link to="/admin/OrderLogs" className="dropdown-item">
                         Order-Logs
@@ -310,11 +306,7 @@ function Navbar() {
                         Site Settings
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/admin/siteSettings" className="dropdown-item">
-                        Site Settings
-                      </Link>
-                    </li>
+
                     <li>
                       <Link to="/admin/notification" className="dropdown-item">
                         Notification
