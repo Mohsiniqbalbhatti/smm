@@ -59,29 +59,39 @@ export const generalSetting = async (req, res) => {
 export const sendGeneralSetting = async (req, res) => {
   try {
     // Fetch only the selected fields from the SiteSettings document
-    let siteSettings = await SiteSettings.findOne();
+    let siteSettings = await SiteSettings.findOne().select(
+      "maintenanceMode domainName whatsapp_channel whatsapp_number"
+    );
     console.log("sendGeneralSetting", siteSettings);
+
     // If settings are not found, create a new document with default values
     if (!siteSettings) {
       siteSettings = new SiteSettings({
         maintenanceMode: false, // Default to false if not provided
-        domainName: "Default Domain Name", // Default site name if not provided
-        whatsapp_channel: "009999999999",
-        whatsapp_number: "+9212345678", // Default WhatsApp channel if not provided
+        domainName: "Default Domain Name", // Default domain name if not provided
+        whatsapp_channel: "009999999999", // Default WhatsApp channel
+        whatsapp_number: "+9212345678", // Default WhatsApp number
       });
 
       // Save the new settings document
       await siteSettings.save();
+
+      // Return the new settings as a response
       return res.status(200).json({
         maintenanceMode: siteSettings.maintenanceMode,
         domainName: siteSettings.domainName,
         whatsapp_channel: siteSettings.whatsapp_channel,
-        whatsapp_number: siteSettings.whatsapp_number,
+        whatsapp_number: siteSettings.whatsapp_number, // Include WhatsApp number
       });
     }
 
     // Send back only the selected fields as a response
-    res.status(200).json({ siteSettings: siteSettings });
+    res.status(200).json({
+      maintenanceMode: siteSettings.maintenanceMode,
+      domainName: siteSettings.domainName,
+      whatsapp_channel: siteSettings.whatsapp_channel,
+      whatsapp_number: siteSettings.whatsapp_number, // Include WhatsApp number
+    });
   } catch (error) {
     // Handle errors
     console.error(error);
