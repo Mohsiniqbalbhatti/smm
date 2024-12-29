@@ -81,12 +81,7 @@ export const sendGeneralSetting = async (req, res) => {
     }
 
     // Send back only the selected fields as a response
-    res.status(200).json({
-      maintenanceMode: siteSettings.maintenanceMode,
-      domainName: siteSettings.domainName,
-      whatsapp_channel: siteSettings.whatsapp_channel,
-      whatsapp_number: siteSettings.whatsapp_number,
-    });
+    res.status(200).json({ siteSettings: siteSettings });
   } catch (error) {
     // Handle errors
     console.error(error);
