@@ -57,6 +57,7 @@ export const getStats = async (req, res) => {
     for (const status of orderStatuses) {
       const count = await Orders.countDocuments({ orderStatus: status });
       orderCounts[status] = count;
+      console.log(`Orders with status '${status}': ${count}`); // Debug log
     }
 
     // Calculate total tickets
@@ -66,6 +67,7 @@ export const getStats = async (req, res) => {
     for (const status of ticketStatuses) {
       const count = await Tickets.countDocuments({ status });
       ticketCounts[status] = count;
+      console.log(`Tickets with status '${status}': ${count}`); // Debug log
     }
 
     // Calculate top 5 best sellers
