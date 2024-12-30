@@ -55,9 +55,8 @@ export const getStats = async (req, res) => {
 
     const orderCounts = {};
     for (const status of orderStatuses) {
-      orderCounts[status] = await Orders.countDocuments({
-        orderStatus: status,
-      });
+      const count = await Orders.countDocuments({ orderStatus: status });
+      orderCounts[status] = count;
     }
 
     // Calculate total tickets
@@ -65,7 +64,8 @@ export const getStats = async (req, res) => {
     const ticketStatuses = ["pending", "closed", "answered"];
     const ticketCounts = {};
     for (const status of ticketStatuses) {
-      ticketCounts[status] = await Tickets.countDocuments({ status });
+      const count = await Tickets.countDocuments({ status });
+      ticketCounts[status] = count;
     }
 
     // Calculate top 5 best sellers
@@ -155,20 +155,13 @@ export const getStats = async (req, res) => {
       totalUsersBalance,
       totalProvidersBalance,
       totalOrders,
-      OrdersCompleted: orderCounts["Completed"] || 0, // Assigning completed orders
-      OrdersPending: orderCounts["Pending"] || 0, // Assigning pending orders
-      OrdersPartial: orderCounts["Partial"] || 0, // Assigning partial orders
-      OrdersCanceled: orderCounts["Canceled"] || 0, // Assigning canceled orders
-      OrdersInProgress: orderCounts["In progress"] || 0, // Assigning in-progress orders
-      OrdersProcessing: orderCounts["Processing"] || 0, // Assigning processing orders
-      OrdersRefunded: orderCounts["Refunded"] || 0, // Assigning refunded orders
+      ...orderCounts,
       totalTickets,
-      pendingTickets: ticketCounts["pending"] || 0,
-      ClosedTickets: ticketCounts["closed"] || 0,
-      AnsweredTickets: ticketCounts["answered"] || 0,
+      ...ticketCounts,
       last5User,
       last5Orders,
       top5BestSellers,
+      AnsweredTickets: ticketCounts.answered,
     };
 
     let adminStats = await AdminStats.findOne();
