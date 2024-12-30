@@ -57,7 +57,6 @@ const adminStatsSchema = new mongoose.Schema({
   AnsweredTickets: {
     type: Number,
   },
-
   last5User: {
     type: Array,
   },
