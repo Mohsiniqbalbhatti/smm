@@ -155,13 +155,20 @@ export const getStats = async (req, res) => {
       totalUsersBalance,
       totalProvidersBalance,
       totalOrders,
-      ...orderCounts,
+      OrdersCompleted: orderCounts["Completed"] || 0, // Assigning completed orders
+      OrdersPending: orderCounts["Pending"] || 0, // Assigning pending orders
+      OrdersPartial: orderCounts["Partial"] || 0, // Assigning partial orders
+      OrdersCanceled: orderCounts["Canceled"] || 0, // Assigning canceled orders
+      OrdersInProgress: orderCounts["In progress"] || 0, // Assigning in-progress orders
+      OrdersProcessing: orderCounts["Processing"] || 0, // Assigning processing orders
+      OrdersRefunded: orderCounts["Refunded"] || 0, // Assigning refunded orders
       totalTickets,
-      ...ticketCounts,
+      pendingTickets: ticketCounts["pending"] || 0,
+      ClosedTickets: ticketCounts["closed"] || 0,
+      AnsweredTickets: ticketCounts["answered"] || 0,
       last5User,
       last5Orders,
       top5BestSellers,
-      AnsweredTickets: ticketCounts.answered,
     };
 
     let adminStats = await AdminStats.findOne();
