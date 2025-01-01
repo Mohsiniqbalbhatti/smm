@@ -62,7 +62,6 @@ export const sendGeneralSetting = async (req, res) => {
     let siteSettings = await SiteSettings.findOne().select(
       "maintenanceMode domainName whatsapp_channel whatsapp_number"
     );
-    console.log("sendGeneralSetting", siteSettings);
 
     // If settings are not found, create a new document with default values
     if (!siteSettings) {

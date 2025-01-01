@@ -42,7 +42,7 @@ import AdminLogin from "../Guest/AdminLogin";
 import StatsForAdmin from "../admin/StatsForAdmin";
 import ResetPassword from "../Guest/ResetPassword";
 import Notifications from "../admin/Notifications";
-import UploadAssets from "../admin/generalSettings/UploadAssets";
+import UploadAssets from "../admin/UploadAssets";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +86,7 @@ const router = createBrowserRouter([
           { path: "/admin/tickets", element: <TicketsAdmin /> },
           { path: "/admin/tickets/:ticketId", element: <TicketDetailsAdmin /> },
           { path: "admin/notification", element: <Notifications /> },
+          { path: "admin/uploadAssets", element: <UploadAssets /> },
 
           {
             element: <SiteSettings />,
@@ -99,7 +100,6 @@ const router = createBrowserRouter([
               { path: "admin/emailSetting", element: <EmailSetting /> },
               { path: "admin/emailSetting", element: <EmailSetting /> },
               { path: "admin/emailTemplate", element: <EmailTemplates /> },
-              { path: "admin/uploadAssets", element: <UploadAssets /> },
             ],
           },
         ],

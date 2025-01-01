@@ -8,7 +8,7 @@ import {
 import requireAdmin from "../middleware/requireAdmin.js";
 
 const router = express.Router();
-router.use(requireAdmin);
+
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,9 +26,14 @@ const upload = multer({
 });
 
 // Route to update logo
-router.post("/update-logo", upload.single("logo"), uploadLogo);
+router.post("/update-logo", requireAdmin, upload.single("logo"), uploadLogo);
 
 // Route to update favicon
-router.post("/update-favicon", upload.single("favicon"), uploadFavicon);
+router.post(
+  "/update-favicon",
+  requireAdmin,
+  upload.single("favicon"),
+  uploadFavicon
+);
 
 export default router;

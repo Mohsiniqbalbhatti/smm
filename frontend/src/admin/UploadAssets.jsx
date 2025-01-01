@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Loader from "../../components/Loader";
+import Loader from "../components/Loader";
 import toast from "react-hot-toast";
 const UploadAssets = () => {
   const {
