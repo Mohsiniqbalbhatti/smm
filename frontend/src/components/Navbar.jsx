@@ -319,6 +319,11 @@ function Navbar() {
                         Notification
                       </Link>
                     </li>
+                    <li>
+                      <Link to="/admin/uploadAssets" className="dropdown-item">
+                        Upload Assets
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               ) : (

@@ -61,7 +61,7 @@ function StatsForAdmin() {
     },
     {
       title: "Total Amount Received",
-      detail: stats.totalAmountRecived,
+      detail: stats.totalAmountReceived,
       icon: <BsCashCoin className="fs-2" />,
     },
     {
@@ -91,37 +91,37 @@ function StatsForAdmin() {
     },
     {
       title: "Completed Orders",
-      detail: stats.OrdersCompleted,
+      detail: stats.ordersCompleted,
       icon: <FaCheckCircle className="fs-2" />,
     },
     {
       title: "Processing Orders",
-      detail: stats.OrdersProcessing,
+      detail: stats.ordersProcessing,
       icon: <FaArrowUpWideShort className="fs-2" />,
     },
     {
       title: "In Progress Orders",
-      detail: stats.OrdersInProgress,
+      detail: stats.ordersProgress,
       icon: <MdTimer className="fs-2" />,
     },
     {
       title: "Pending Orders",
-      detail: stats.OrdersPending,
+      detail: stats.ordersPending,
       icon: <MdOutlinePendingActions className="fs-2" />,
     },
     {
       title: "Partial Orders",
-      detail: stats.OrdersPartial,
+      detail: stats.ordersPartial,
       icon: <FaStarHalfAlt className="fs-2" />,
     },
     {
       title: "Canceled Orders",
-      detail: stats.OrdersCanceled,
+      detail: stats.ordersCanceled,
       icon: <MdCancel className="fs-2" />,
     },
     {
       title: "Refunded Orders",
-      detail: stats.OrdersRefunded,
+      detail: stats.ordersRefunded,
       icon: <HiReceiptRefund className="fs-2" />,
     },
     {
@@ -131,17 +131,17 @@ function StatsForAdmin() {
     },
     {
       title: "Pending Tickets",
-      detail: stats.pendingTickets,
+      detail: stats.ticketsPending,
       icon: <FaTicketSimple className="fs-2" />,
     },
     {
       title: "Closed Tickets",
-      detail: stats.ClosedTickets,
+      detail: stats.ticketsClosed,
       icon: <FaTicketAlt className="fs-2" />,
     },
     {
       title: "Answered Tickets",
-      detail: stats.AnsweredTickets,
+      detail: stats.ticketsAnswered,
       icon: <FaTicketAlt className="fs-2" />,
     },
   ];

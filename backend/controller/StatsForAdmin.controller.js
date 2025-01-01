@@ -1,10 +1,10 @@
 import Users from "../model/User.model.js";
 import Orders from "../model/OrderHistory.model.js";
-import Tickets from "../model/Tickets.model.js";
 import AdminStats from "../model/StatsForAdmin.model.js";
 import Providers from "../model/ApiList.model.js";
 import Transactions from "../model/TransactionLogs.model.js";
 import CurrencyRate from "../model/CurrencyConvertor.model.js";
+import Ticket from "../model/Tickets.model.js";
 
 export const getStats = async (req, res) => {
   try {
@@ -31,9 +31,6 @@ export const getStats = async (req, res) => {
       ? totalUsersBalanceResult[0].totalBalance
       : 0;
 
-    // Calculate the total Orders
-    const totalOrders = await Orders.countDocuments();
-
     // Get the last 5 orders sorted by creation date
     const last5Orders = await Orders.find()
       .sort({ createdAt: -1 })
@@ -42,34 +39,46 @@ export const getStats = async (req, res) => {
         "orderId userName serviceName ApiName link quantity createdAt orderStatus error"
       );
 
-    // Count total orders by status
-    const orderStatuses = [
-      "Completed",
-      "Pending",
-      "Partial",
-      "Canceled",
-      "In progress",
-      "Processing",
-      "Refunded",
-    ];
+    // Calculate the total Orders
+    const totalOrders = await Orders.countDocuments();
 
-    const orderCounts = {};
-    for (const status of orderStatuses) {
-      const count = await Orders.countDocuments({ orderStatus: status });
-      orderCounts[status] = count;
-      console.log(`Orders with status '${status}': ${count}`); // Debug log
-    }
+    // Log order statuses to check for discrepancies
+    const orderStatuses = await Orders.distinct("orderStatus");
+
+    // Calculate various order statuses
+    const ordersCompleted = await Orders.countDocuments({
+      orderStatus: "Completed",
+    });
+
+    const ordersPending = await Orders.countDocuments({
+      orderStatus: "Pending",
+    });
+
+    const ordersPartial = await Orders.countDocuments({
+      orderStatus: "Partial",
+    });
+
+    const ordersCanceled = await Orders.countDocuments({
+      orderStatus: "Canceled",
+    });
+
+    const ordersProgress = await Orders.countDocuments({
+      orderStatus: "In progress",
+    });
+
+    const ordersProcessing = await Orders.countDocuments({
+      orderStatus: "Processing",
+    });
+
+    const ordersRefunded = await Orders.countDocuments({
+      orderStatus: "Refunded",
+    });
 
     // Calculate total tickets
-    const totalTickets = await Tickets.countDocuments();
-    const ticketStatuses = ["pending", "closed", "answered"];
-    const ticketCounts = {};
-    for (const status of ticketStatuses) {
-      const count = await Tickets.countDocuments({ status });
-      ticketCounts[status] = count;
-      console.log(`Tickets with status '${status}': ${count}`); // Debug log
-    }
-
+    const totalTickets = await Ticket.countDocuments();
+    const ticketsPending = await Ticket.countDocuments({ status: "pending" });
+    const ticketsClosed = await Ticket.countDocuments({ status: "closed" });
+    const ticketsAnswered = await Ticket.countDocuments({ status: "answered" });
     // Calculate top 5 best sellers
     const top5BestSellers = await Orders.aggregate([
       { $group: { _id: "$serviceId", count: { $sum: 1 } } },
@@ -147,18 +156,7 @@ export const getStats = async (req, res) => {
       const profit = isNaN(order.profit) ? 0 : order.profit;
       return sum + profit;
     }, 0);
-    // enums for orders and ticktes
-    const orderStatusesEnum = [
-      "Pending",
-      "Completed",
-      "In progress",
-      "Canceled",
-      "Partial",
-      "Processing",
-      "Refunded",
-    ];
 
-    const ticketStatusesEnum = ["new", "pending", "closed", "answered"];
     // Create or update the `AdminStats` document in the database
     const adminStatsData = {
       totalUsers,
@@ -172,17 +170,16 @@ export const getStats = async (req, res) => {
       last5User,
       last5Orders,
       top5BestSellers,
-      ...orderStatusesEnum.reduce((acc, status) => {
-        acc[`Orders${status.replace(/\s+/g, "")}`] =
-          orderCounts[status.toLowerCase()] || 0;
-        return acc;
-      }, {}),
-      // Dynamically adding ticket counts
-      ...ticketStatusesEnum.reduce((acc, status) => {
-        acc[`${status.charAt(0).toUpperCase() + status.slice(1)}Tickets`] =
-          ticketCounts[status.toLowerCase()] || 0;
-        return acc;
-      }, {}),
+      ticketsClosed,
+      ticketsAnswered,
+      ticketsPending,
+      ordersRefunded,
+      ordersProcessing,
+      ordersCanceled,
+      ordersCompleted,
+      ordersPending,
+      ordersPartial,
+      ordersProgress,
     };
 
     let adminStats = await AdminStats.findOne();
@@ -198,11 +195,10 @@ export const getStats = async (req, res) => {
       adminStats = new AdminStats(adminStatsData);
       await adminStats.save();
     }
-    console.log(adminStats);
     // Send response with stats
     res.status(200).json({
       message: "Stats updated successfully",
-      stats: adminStats,
+      stats: adminStatsData,
     });
   } catch (error) {
     console.error("Error getting stats:", error);

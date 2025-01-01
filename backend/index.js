@@ -26,6 +26,7 @@ import OrderHistoryRouter from "./router/OrderHistory.router.js";
 import transactionsLogsRouter from "./router/TransactionLogs.router.js";
 import authGoogleRouter from "./router/authGoogle.router.js";
 import NotificationRouter from "./router/Notification.router.js";
+import uploadRoutes from "./router/uploadAssets.router.js";
 
 const app = express();
 dotenv.config();
@@ -55,6 +56,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use("/siteSettings", siteSettingsRouter);
+app.use("/uploads", uploadRoutes);
 app.use("/admin/ApiList", apiListRouter);
 app.use("/admin/notification", NotificationRouter);
 app.use("/admin/apiServices", apiServicesRouter);

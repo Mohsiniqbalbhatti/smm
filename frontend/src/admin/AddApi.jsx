@@ -45,9 +45,14 @@ function AddApi() {
       })
       .then((res) => {
         if (res.data) {
-          toast.success("Api Added");
-          reset();
-          fetchApiList(); // Fetch API list after adding a new API
+          if (res.status === 200) {
+            toast.success(res?.message);
+            reset();
+            fetchApiList();
+          } else if (res.status === 500) {
+            toast.error(res?.error);
+          }
+          // Fetch API list after adding a new API
         }
       })
       .catch((err) => {

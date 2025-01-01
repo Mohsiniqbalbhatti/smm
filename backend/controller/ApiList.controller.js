@@ -31,7 +31,7 @@ export const AddApiList = async (req, res) => {
     });
 
     await newAPI.save();
-    res.status(201).json({ message: "API Saved successfully", api: newAPI });
+    res.status(200).json({ message: "API Saved successfully", api: newAPI });
   } catch (error) {
     console.log("Error", error);
     res.status(500).json({
