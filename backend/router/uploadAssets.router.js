@@ -9,7 +9,7 @@ import {
 import requireAdmin from "../middleware/requireAdmin.js";
 
 const router = express.Router();
-
+router.use(requireAdmin);
 // Check if 'uploads' folder exists, if not create it
 const checkAndCreateUploadsFolder = () => {
   const uploadsPath = path.join(__dirname, "../uploads");

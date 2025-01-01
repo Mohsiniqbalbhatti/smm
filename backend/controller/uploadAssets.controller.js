@@ -5,7 +5,6 @@ const __dirname = path.resolve(); // To get the current directory
 
 // Controller to handle logo upload
 export const uploadLogo = (req, res) => {
-  console.log("Uploading");
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No logo file uploaded." });
