@@ -17,6 +17,7 @@ const UploadAssets = () => {
   } = useForm();
 
   const [load, setLoad] = useState(false);
+  const token = localStorage.getItem("token")?.replace(/^"|"$|'/g, "") || null;
 
   // Handle logo upload
   const onLogoSubmit = async (data) => {
@@ -31,6 +32,7 @@ const UploadAssets = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -56,6 +58,7 @@ const UploadAssets = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
