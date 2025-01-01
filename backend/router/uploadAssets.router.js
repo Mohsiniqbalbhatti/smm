@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
-import path from "path"; // Add this import statement
+import path from "path";
+import fs from "fs"; // Import fs module to check and create directories
 import {
   uploadLogo,
   uploadFavicon,
@@ -9,9 +10,18 @@ import requireAdmin from "../middleware/requireAdmin.js";
 
 const router = express.Router();
 
+// Check if 'uploads' folder exists, if not create it
+const checkAndCreateUploadsFolder = () => {
+  const uploadsPath = path.join(__dirname, "../uploads");
+  if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath); // Create the folder if it doesn't exist
+  }
+};
+
 // Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    checkAndCreateUploadsFolder(); // Ensure uploads folder exists before saving file
     cb(null, "uploads/"); // Temporary storage for uploaded files
   },
   filename: (req, file, cb) => {
@@ -29,11 +39,6 @@ const upload = multer({
 router.post("/update-logo", upload.single("logo"), uploadLogo);
 
 // Route to update favicon
-router.post(
-  "/update-favicon",
-
-  upload.single("favicon"),
-  uploadFavicon
-);
+router.post("/update-favicon", upload.single("favicon"), uploadFavicon);
 
 export default router;
