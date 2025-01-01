@@ -26,12 +26,12 @@ const upload = multer({
 });
 
 // Route to update logo
-router.post("/update-logo", requireAdmin, upload.single("logo"), uploadLogo);
+router.post("/update-logo", upload.single("logo"), uploadLogo);
 
 // Route to update favicon
 router.post(
   "/update-favicon",
-  requireAdmin,
+
   upload.single("favicon"),
   uploadFavicon
 );
