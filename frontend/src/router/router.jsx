@@ -85,7 +85,7 @@ const router = createBrowserRouter([
           { path: "/admin/transactionsLog", element: <TransactionLogs /> },
           { path: "/admin/tickets", element: <TicketsAdmin /> },
           { path: "/admin/tickets/:ticketId", element: <TicketDetailsAdmin /> },
-          { path: "admin/notification", element: <Notifications /> },
+          { path: "admin/notifications", element: <Notifications /> },
           { path: "admin/uploadAssets", element: <UploadAssets /> },
 
           {

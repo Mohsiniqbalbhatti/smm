@@ -102,7 +102,7 @@ function SideBar() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin/notification" className="dropdown-item">
+                    <Link to="/admin/notifications" className="dropdown-item">
                       Notification
                     </Link>
                   </li>
