@@ -198,7 +198,7 @@ export const getStats = async (req, res) => {
       adminStats = new AdminStats(adminStatsData);
       await adminStats.save();
     }
-
+    console.log(adminStats);
     // Send response with stats
     res.status(200).json({
       message: "Stats updated successfully",

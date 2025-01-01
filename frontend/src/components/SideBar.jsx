@@ -1,16 +1,13 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom"; // Import Link from react-router-dom
 import { FaCartShopping } from "react-icons/fa6";
-import { MdChildFriendly, MdOutlineNewReleases } from "react-icons/md";
+import { MdOutlineNewReleases } from "react-icons/md";
 import {
-  FaEdit,
-  FaFolderPlus,
   FaHistory,
   FaInfoCircle,
   FaPlug,
   FaServer,
   FaTicketAlt,
-  FaUsers,
   FaWallet,
   FaUserShield,
   FaQuestionCircle, // Admin icon

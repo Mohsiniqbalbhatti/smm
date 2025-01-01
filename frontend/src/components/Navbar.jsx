@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 function Navbar() {
   const [screen, setScreen] = useState(); // State for screen size
   const { currency, setCurrency } = useCurrency();
-  const [authUser] = useAuth();
+  const [authUser, setAuthUser] = useAuth();
   const [notifications, setNotifications] = useState([]); // Ensure it's an array
   const [load, setLoad] = useState(false);
 
@@ -53,6 +53,13 @@ function Navbar() {
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value);
+  };
+
+  const handleLogout = () => {
+    toast.success("Logout Successful");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setAuthUser(undefined);
   };
 
   return (
@@ -322,6 +329,7 @@ function Navbar() {
               <button
                 className="btn btn-main w-75 position-absolute"
                 style={{ bottom: 10 }}
+                onClick={handleLogout}
               >
                 Logout
               </button>

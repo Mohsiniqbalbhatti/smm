@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import ApiListSchema from "../model/ApiList.model.js";
 import axios from "axios";
+import ApiServicesModel from "../model/ApiServices.model.js";
+import categoriesModel from "../model/categories.model.js";
 
 // Function to handle adding a new API
 export const AddApiList = async (req, res) => {
@@ -110,26 +112,52 @@ export const editApi = async (req, res) => {
   }
 };
 
-//delete api
+// Delete API and related data
 export const deleteApi = async (req, res) => {
   const { id } = req.params; // Get the ID from the request parameters
 
-  // Optional: Check if the ID is a valid ObjectId
+  // Check if the ID is a valid ObjectId
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid API ID" });
   }
 
-  try {
-    // Pass the ID directly to findByIdAndDelete
-    const deletedApi = await ApiListSchema.findByIdAndDelete(id);
+  const session = await mongoose.startSession(); // Start a session for transaction
+  session.startTransaction();
 
-    // Check if any document was deleted
+  try {
+    // Find and delete the API
+    const deletedApi = await ApiListSchema.findByIdAndDelete(id, { session });
+
     if (!deletedApi) {
-      return res.status(404).json({ message: "Api not found" });
+      await session.abortTransaction(); // Abort if API is not found
+      session.endSession();
+      return res.status(404).json({ message: "API not found" });
     }
 
-    res.status(200).json({ message: "Api deleted successfully" });
+    // Delete related services
+    await ApiServicesModel.deleteMany(
+      { ApiName: deletedApi.ApiName },
+      { session }
+    );
+
+    // Delete related categories
+    await categoriesModel.deleteMany(
+      { ApiName: deletedApi.ApiName },
+      { session }
+    );
+
+    await session.commitTransaction(); // Commit the transaction
+    session.endSession();
+
+    res
+      .status(200)
+      .json({ message: "API and related data deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting Api", error: err.message });
+    await session.abortTransaction(); // Rollback the transaction
+    session.endSession();
+    res.status(500).json({
+      message: "Error deleting API and related Services and categories",
+      error: err.message,
+    });
   }
 };
