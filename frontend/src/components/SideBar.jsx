@@ -57,6 +57,11 @@ function SideBar() {
                 </button>
                 <ul className="dropdown-menu" aria-labelledby="adminDropdown">
                   <li>
+                    <Link to="/Admin-statistics" className="dropdown-item">
+                      Admin statistics
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/admin/ApiProviders" className="dropdown-item">
                       Api Providers
                     </Link>
