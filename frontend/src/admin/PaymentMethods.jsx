@@ -3,6 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 function PaymentMethods() {
   const [methods, setMethods] = useState([]);
@@ -17,7 +18,6 @@ function PaymentMethods() {
   } = useForm();
 
   const fetchPaymentMethods = async () => {
-    console.log("sendPaymentMethods");
     setLoading(true);
     try {
       const res = await axios.get(
@@ -28,7 +28,6 @@ function PaymentMethods() {
           },
         }
       );
-      console.log(res);
       if (res.data && Array.isArray(res.data.PaymentMethods)) {
         setMethods(res.data.PaymentMethods);
       }
@@ -72,8 +71,10 @@ function PaymentMethods() {
           },
         }
       );
+      toast.success("Payment method updated successfully!");
       fetchPaymentMethods(); // Refresh the payment methods after update
     } catch (error) {
+      toast.error("Error updating payment method:", error);
       console.error("Error updating payment method:", error);
     } finally {
       setLoading(false);
@@ -212,9 +213,10 @@ function PaymentMethods() {
                     className="form-control"
                     id="description"
                     {...register("description", {
-                      required: "description is required",
+                      required: "Description is required",
                     })}
                   />
+
                   {errors.description && (
                     <p className="text-danger">{errors.description.message}</p>
                   )}

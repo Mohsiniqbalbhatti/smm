@@ -76,7 +76,7 @@ const router = createBrowserRouter([
           { path: "/Admin-statistics", element: <StatsForAdmin /> },
           { path: "/OrderHistory", element: <OrderHistory /> },
           { path: "/admin/ApiProviders", element: <AddApi /> },
-          { path: "/admin/apiServices", element: <ApiServices /> },
+          { path: "/admin/apiService", element: <ApiServices /> },
           { path: "/admin/categories", element: <Categories /> },
           { path: "/admin/services", element: <Services /> },
           { path: "/admin/OrderLogs", element: <OrderLogs /> },
