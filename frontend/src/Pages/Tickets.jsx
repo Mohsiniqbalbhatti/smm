@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { useSiteSettings } from "../context/SiteSettingsProvider";
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
 
 function Tickets() {
   const { siteSettings } = useSiteSettings();

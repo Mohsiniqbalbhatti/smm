@@ -4,9 +4,12 @@ import Loader from "../components/Loader";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthProvider.jsx";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function AddFunds() {
   const token = localStorage.getItem("token")?.replace(/^"|"$|'/g, "") || null;
+  const { siteSettings } = useSiteSettings();
 
   const {
     register,
