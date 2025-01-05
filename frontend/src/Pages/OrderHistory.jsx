@@ -8,6 +8,8 @@ import Loader from "../components/Loader";
 import exchangeRate, { useCurrency } from "../context/CurrencyContext";
 import { IoSearch } from "react-icons/io5";
 import toast from "react-hot-toast";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
 
 function OrderHistory() {
   const [authUser] = useAuth(); // Get authUser from context
@@ -16,6 +18,8 @@ function OrderHistory() {
   const [loading, setLoading] = useState(true); // State to manage loading status
   const { currency } = useCurrency();
   const [search, setSearch] = useState("");
+  const { siteSettings } = useSiteSettings();
+
   if (!authUser) {
     return <Login />;
   }
@@ -133,6 +137,36 @@ function OrderHistory() {
 
   return (
     <div>
+      <Helmet>
+        <title>Order History | {siteSettings?.domainName}</title>
+        <meta
+          name="description"
+          content={`View your past orders and transactions on ${siteSettings?.domainName}. Easily track your order history and status for a seamless experience.`}
+        />
+        <meta
+          name="keywords"
+          content="order history, transaction history, past orders, order tracking, {siteSettings?.domainName} orders"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content={`Order History | ${siteSettings?.domainName}`}
+        />
+        <meta
+          property="og:description"
+          content={`Access your order history on ${siteSettings?.domainName}. Check your previous orders, their status, and transaction details in one place.`}
+        />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/OrderHistory`}
+        />
+        <meta property="og:type" content="website" />
+        <link
+          rel="canonical"
+          href={`https://${siteSettings?.domainName}/OrderHistory`}
+        />
+      </Helmet>
+
       <h1>Order History</h1>
       <div className="row justify-content-center align-items-center my-2">
         <div className="col-12 col-md-6 mt-2">

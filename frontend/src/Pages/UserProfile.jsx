@@ -8,9 +8,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import Loader from "../components/Loader";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
 
 function UserProfile() {
   const [authUser] = useAuth();
+  const { siteSettings } = useSiteSettings();
   const [apiKey, setApiKey] = useState(null);
   const [load, setLoad] = useState(false); // State to handle loading
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -195,6 +198,31 @@ function UserProfile() {
   return (
     <div className="px-4 px-lg-2">
       {load && <Loader />}
+      <Helmet>
+        <title>User Profile | Manage Your Account</title>
+        <meta
+          name="description"
+          content={`Manage your user profile on ${siteSettings?.domainName}. Update your name, email, API key, and password securely and efficiently.`}
+        />
+        <meta
+          name="keywords"
+          content="user profile, account management, update profile, API key, change password"
+        />
+        <meta
+          property="og:title"
+          content="User Profile | Manage Your Account"
+        />
+        <meta
+          property="og:description"
+          content={`Access and manage your ${siteSettings?.domainName} account settings, including updating personal information, API key, and password.`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/user-profile`}
+        />
+      </Helmet>
+
       <div className="row p-2 my-2">
         <div className="col-12 my-2 bg-200 py-4 rounded">
           <h4>

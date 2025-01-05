@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import exchangeRate, { useCurrency } from "../context/CurrencyContext";
 import { useAuth } from "../context/AuthProvider";
 import { Helmet } from "react-helmet"; // Import Helmet for SEO
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function Services() {
   const [load, setLoad] = useState(true); // State to handle global loading
@@ -13,6 +14,7 @@ function Services() {
   const { currency, setCurrency } = useCurrency();
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [authUser] = useAuth();
+  const { siteSettings } = useSiteSettings();
 
   // Fetch categories and services simultaneously
   const fetchData = async () => {
@@ -76,18 +78,45 @@ function Services() {
   return (
     <div>
       <Helmet>
-        <title>Our Services - {selectedCategory || "All Categories"}</title>
+        <title>
+          Our Services - {selectedCategory || "All Categories"} |{" "}
+          {siteSettings?.domainName}
+        </title>
         <meta
           name="description"
-          content={`Browse our extensive range of services${
+          content={`Explore a wide range of services offered by ${
+            siteSettings?.domainName
+          }${
             selectedCategory ? ` in the ${selectedCategory} category` : ""
-          }.`}
+          }. Find the best solutions tailored to your needs.`}
         />
         <meta
           name="keywords"
-          content="services, category, service id, description, price"
+          content={`services, ${
+            selectedCategory || "all categories"
+          }, service id, description, price`}
         />
+        <meta
+          property="og:title"
+          content={`Our Services - ${selectedCategory || "All Categories"} | ${
+            siteSettings?.domainName
+          }`}
+        />
+        <meta
+          property="og:description"
+          content={`Discover premium services from ${siteSettings?.domainName}${
+            selectedCategory ? ` in the ${selectedCategory} category` : ""
+          }. Reliable and affordable solutions at your fingertips.`}
+        />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/services${
+            selectedCategory ? `/${selectedCategory}` : ""
+          }`}
+        />
+        <meta property="og:type" content="website" />
       </Helmet>
+
       {authUser ? (
         <h1>Services</h1>
       ) : (

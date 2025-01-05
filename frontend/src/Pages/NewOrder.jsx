@@ -16,6 +16,8 @@ import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthProvider";
 import Login from "../Guest/Login";
 import { Link } from "react-router-dom";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
 
 function NewOrder() {
   const [services, setServices] = useState([]); // State to hold services
@@ -31,6 +33,7 @@ function NewOrder() {
   const [searchedServices, setSearchedServices] = useState([]);
   const [allServices, setAllServices] = useState([]);
   const [isDripFeedChecked, setIsDripFeedChecked] = useState(false);
+  const { siteSettings } = useSiteSettings();
 
   if (!authUser) {
     return <Login />;
@@ -292,6 +295,33 @@ function NewOrder() {
 
   return (
     <div className="px-4 px-lg-2">
+      <Helmet>
+        <title>New Orders | {siteSettings?.domainName}</title>
+        <meta
+          name="description"
+          content={`Place new orders for services on ${siteSettings?.domainName}. Explore available services and start a new order for your social media needs.`}
+        />
+        <meta
+          name="keywords"
+          content="new orders, place order, services, order services, social media services, {siteSettings?.domainName} orders"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content={`New Orders | ${siteSettings?.domainName}`}
+        />
+        <meta
+          property="og:description"
+          content={`Start a new order on ${siteSettings?.domainName} for your social media services. Choose from a wide range of services tailored to your needs.`}
+        />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}`}
+        />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href={`https://${siteSettings?.domainName}`} />
+      </Helmet>
+
       {/* stats */}
       {load ? <Loader /> : ""}
       <div className="row gy-4 gx-3">

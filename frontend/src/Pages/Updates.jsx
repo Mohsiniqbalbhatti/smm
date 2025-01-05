@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet"; // Import Helmet for SEO
 import Loader from "../components/Loader";
 import axios from "axios";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function Updates() {
   const [updates, setUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("1");
   const token = localStorage.getItem("token")?.replace(/^"|"$|'/g, "") || null;
+  const { siteSettings } = useSiteSettings();
 
   useEffect(() => {
     const fetchUpdates = async () => {
@@ -67,17 +69,33 @@ function Updates() {
     <div>
       {/* SEO Metadata */}
       <Helmet>
-        <title>Updates | Your Site Name</title> {/* Add a relevant title */}
+        <title>Updates | {siteSettings?.domainName}</title>
         <meta
           name="description"
-          content="Stay updated with the latest rate changes and service status. Filter updates to see rate increases, decreases, or disabled services."
+          content={`Stay informed with the latest updates from ${siteSettings?.domainName}. Get real-time information about rate changes, service updates, and status changes.`}
         />
         <meta
           name="keywords"
-          content="Updates, Rate Changes, Services, Disabled Services, Rate Increase, Rate Decrease"
+          content="updates, rate changes, service updates, disabled services, rate increase, rate decrease"
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="http://yourdomain.com/updates" />
+        <meta
+          property="og:title"
+          content={`Updates | ${siteSettings?.domainName}`}
+        />
+        <meta
+          property="og:description"
+          content={`Stay updated on all changes at ${siteSettings?.domainName}, including rate adjustments and service modifications.`}
+        />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/updates`}
+        />
+        <meta property="og:type" content="website" />
+        <link
+          rel="canonical"
+          href={`https://${siteSettings?.domainName}/updates`}
+        />
       </Helmet>
 
       {loading && <Loader />}

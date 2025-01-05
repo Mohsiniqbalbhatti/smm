@@ -134,6 +134,31 @@ function AddFunds() {
 
   return (
     <div className="row">
+      <Helmet>
+        <title>Add Funds | {siteSettings?.domainName}</title>
+        <meta
+          name="description"
+          content={`Easily add funds to your ${siteSettings?.domainName} account. Secure and reliable payment options to ensure seamless transactions.`}
+        />
+        <meta
+          name="keywords"
+          content="add funds, account balance, secure payment, top-up, funds management"
+        />
+        <meta
+          property="og:title"
+          content={`Add Funds | ${siteSettings?.domainName}`}
+        />
+        <meta
+          property="og:description"
+          content={`Top up your ${siteSettings?.domainName} account balance effortlessly. Choose secure payment options for a smooth experience.`}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/add-funds`}
+        />
+      </Helmet>
+
       {load && <Loader />}
       <div className="col-12">
         <div className="card">

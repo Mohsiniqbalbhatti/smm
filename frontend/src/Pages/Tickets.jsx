@@ -6,8 +6,10 @@ import toast from "react-hot-toast";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import { useSiteSettings } from "../context/SiteSettingsProvider";
 
 function Tickets() {
+  const { siteSettings } = useSiteSettings();
   const token = localStorage.getItem("token")?.replace(/^"|"$|'/g, "") || null;
 
   const {
@@ -113,6 +115,36 @@ function Tickets() {
 
   return (
     <div className="row">
+      <Helmet>
+        <title>Support Tickets | {siteSettings?.domainName}</title>
+        <meta
+          name="description"
+          content={`Need help? Create support tickets on ${siteSettings?.domainName} to address your issues or queries. Our support team is here to assist you.`}
+        />
+        <meta
+          name="keywords"
+          content="support tickets, customer support, create tickets, issue resolution, help desk, ${siteSettings?.domainName} support"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content={`Support Tickets | ${siteSettings?.domainName}`}
+        />
+        <meta
+          property="og:description"
+          content={`Contact the ${siteSettings?.domainName} support team by creating tickets for your issues or queries. We're here to provide assistance.`}
+        />
+        <meta
+          property="og:url"
+          content={`https://${siteSettings?.domainName}/tickets`}
+        />
+        <meta property="og:type" content="website" />
+        <link
+          rel="canonical"
+          href={`https://${siteSettings?.domainName}/tickets`}
+        />
+      </Helmet>
+
       {load && <Loader />}
       <div className="col-12">
         <div className="card">

@@ -1,5 +1,7 @@
 import React from "react";
 import { useSiteSettings } from "../context/SiteSettingsProvider";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Helmet } from "react-helmet"; // Import Helmet for SEO
 
 function Api() {
   const { siteSettings } = useSiteSettings();
@@ -7,6 +9,31 @@ function Api() {
   return (
     <div>
       <div className="container-fluid mt-2">
+        <Helmet>
+          <title>API Documentation | {siteSettings?.domainName}</title>
+          <meta
+            name="description"
+            content={`Learn how to use the ${siteSettings?.domainName} API to access and automate services. Comprehensive API documentation to guide developers.`}
+          />
+          <meta
+            name="keywords"
+            content="API, API documentation, developer guide, automate services, API integration, SMM API"
+          />
+          <meta
+            property="og:title"
+            content={`API Documentation | ${siteSettings?.domainName}`}
+          />
+          <meta
+            property="og:description"
+            content={`Discover the ${siteSettings?.domainName} API for seamless integration and automation of services. Find detailed documentation and examples.`}
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content={`https://${siteSettings?.domainName}/api`}
+          />
+        </Helmet>
+
         <div className="row">
           <div className="col-12">
             <h3>Api</h3>
@@ -28,7 +55,10 @@ function Api() {
             <div className="row d-flex justify-content-between my-2">
               <div className="col-md col-12 bg-300 my-2 my-md-0 bg-300 rounded p-2 me-2">
                 <div className=" d-flex justify-content-between px-4">
-                  Api Key <span className="fw-normal">Click Here</span>
+                  Api Key{" "}
+                  <Link className="fw-normal" to="/profile">
+                    Click Here
+                  </Link>
                 </div>
               </div>
               <div className="col-md col-12 bg-300 my-2 my-md-0 bg-300 rounded p-2">
