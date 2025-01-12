@@ -296,7 +296,7 @@ function AddApi() {
                     </button>
                     <Link
                       className="btn btn-sm btn-warning me-2"
-                      to={"/admin/ApiServices"}
+                      to={"/admin/ApiService"}
                     >
                       <FaListUl />
                     </Link>
