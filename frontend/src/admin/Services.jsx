@@ -184,7 +184,7 @@ function Services() {
       {load && <Loader />} {/* Show loader only when load is true */}
       <div className="row d-flex align-items-center justify-content-center">
         <div className="col-12 col-md-8 col-lg-6 mt-2">
-          <Link to={"/admin/apiServices"} className="btn btn-main">
+          <Link to={"/admin/apiService"} className="btn btn-main">
             <IoAddCircle className="fs-2 pe-2" /> Add Services
           </Link>
         </div>
