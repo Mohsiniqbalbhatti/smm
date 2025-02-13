@@ -109,21 +109,7 @@ function Signup() {
                 <span className="text-danger">{errors.fullname.message}</span>
               )}
             </div>
-            {/* Username */}
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
-                type="text"
-                className="form-control p-2"
-                id="username"
-                {...register("username", { required: "Username is required" })}
-              />
-              {errors.username && (
-                <span className="text-danger">{errors.username.message}</span>
-              )}
-            </div>
+
             {/* Email */}
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
@@ -143,23 +129,6 @@ function Signup() {
               />
               {errors.email && (
                 <span className="text-danger">{errors.email.message}</span>
-              )}
-            </div>
-            {/* WhatsApp */}
-            <div className="mb-3">
-              <label htmlFor="whatsapp" className="form-label">
-                WhatsApp Number
-              </label>
-              <input
-                type="text"
-                className="form-control p-2"
-                id="whatsapp"
-                {...register("whatsapp", {
-                  required: "WhatsApp number is required",
-                })}
-              />
-              {errors.whatsapp && (
-                <span className="text-danger">{errors.whatsapp.message}</span>
               )}
             </div>
 

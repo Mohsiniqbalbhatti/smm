@@ -179,82 +179,82 @@ const addPendingTransaction = async (
 
 // Function to fetch the latest email using IMAP
 const fetchLatestEmail = async () => {
-  return new Promise((resolve, reject) => {
-    const imapConfig = {
-      user: "mohsiniqbalbhatti0024@gmail.com",
-      password: "irqz acix bknq jism",
-      host: "imap.gmail.com",
-      port: 993,
-      tls: true,
-      tlsOptions: { rejectUnauthorized: false },
-      connTimeout: 10000,
-      authTimeout: 10000,
-    };
+  try {
+    // Fetch site settings dynamically
+    const siteSettings = await SiteSettings.findOne();
+    const adminEmail = siteSettings.email_from;
+    const adminEmailPass = siteSettings.email_Password;
 
-    const imapClient = new imap(imapConfig);
+    return new Promise((resolve, reject) => {
+      const imapConfig = {
+        user: adminEmail, // using dynamically fetched email
+        password: adminEmailPass, // using dynamically fetched password
+        host: "imap.gmail.com",
+        port: 993,
+        tls: true,
+        tlsOptions: { rejectUnauthorized: false },
+        connTimeout: 10000,
+        authTimeout: 10000,
+      };
 
-    imapClient.once("ready", () => {
-      // console.log("IMAP client connected and ready.");
-      imapClient.openBox("INBOX", false, (err, box) => {
-        if (err) {
-          console.error("Error opening inbox:", err);
-          return reject(err);
-        }
+      const imapClient = new imap(imapConfig);
 
-        const searchCriteria = [
-          "UNSEEN",
-          ["FROM", "mohsiniqbalbhatti0024@gmail.com"],
-        ];
-        imapClient.search(searchCriteria, (err, results) => {
+      imapClient.once("ready", () => {
+        imapClient.openBox("INBOX", false, (err, box) => {
           if (err) {
-            console.error("Error searching messages:", err);
+            console.error("Error opening inbox:", err);
             return reject(err);
           }
 
-          if (!results.length) {
-            // console.log("No unread emails found.");
-            return resolve(null);
-          }
+          const searchCriteria = ["UNSEEN", ["FROM", adminEmail]];
+          imapClient.search(searchCriteria, (err, results) => {
+            if (err) {
+              console.error("Error searching messages:", err);
+              return reject(err);
+            }
 
-          const fetch = imapClient.fetch(results, {
-            bodies: "TEXT",
-            struct: true,
-            markSeen: true, // Default to false, will mark as seen after fetching
-          });
+            if (!results.length) {
+              return resolve(null);
+            }
 
-          fetch.on("message", (msg, seqno) => {
-            // console.log(`Fetching message #${seqno}...`);
-            msg.on("body", (stream) => {
-              let emailData = "";
-              stream.on("data", (chunk) => {
-                emailData += chunk.toString("utf8");
-              });
+            const fetch = imapClient.fetch(results, {
+              bodies: "TEXT",
+              struct: true,
+              markSeen: true,
+            });
 
-              stream.on("end", () => {
-                // console.log("Email fetch completed.");
+            fetch.on("message", (msg, seqno) => {
+              msg.on("body", (stream) => {
+                let emailData = "";
+                stream.on("data", (chunk) => {
+                  emailData += chunk.toString("utf8");
+                });
 
-                resolve(emailData);
+                stream.on("end", () => {
+                  resolve(emailData);
+                });
               });
             });
-          });
 
-          fetch.once("end", () => {
-            // console.log("All messages fetched.");
-            imapClient.end();
+            fetch.once("end", () => {
+              imapClient.end();
+            });
           });
         });
       });
-    });
 
-    imapClient.once("error", (err) => {
-      console.error("IMAP connection error:", err.message);
-      reject("IMAP connection error: " + err.message);
-    });
+      imapClient.once("error", (err) => {
+        console.error("IMAP connection error:", err.message);
+        reject("IMAP connection error: " + err.message);
+      });
 
-    imapClient.connect();
-  });
+      imapClient.connect();
+    });
+  } catch (error) {
+    console.error("Error fetching site settings:", error);
+    throw error;
+  }
 };
-
 // Function to extract transaction details from the email body using regex
 const extractTransactionDetails = (emailBody) => {
   // console.log("Extracting transaction details from email body..."); // Log start of extraction
