@@ -34,7 +34,9 @@ function TermsCondition() {
   return (
     <div className="px-2 px-lg-4">
       <Helmet>
-        <title>Terms and Conditions | {siteSettings?.domainName}</title>
+        <title>{`Terms and Conditions | ${
+          siteSettings?.domainName || ""
+        }`}</title>{" "}
         <meta
           name="description"
           content={`Read the Terms and Conditions of using ${siteSettings?.domainName}. Understand the rules, responsibilities, and guidelines for using our platform.`}

@@ -117,7 +117,7 @@ function Tickets() {
   return (
     <div className="row">
       <Helmet>
-        <title>Support Tickets | {siteSettings?.domainName}</title>
+        <title>{`Support Tickets | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`Need help? Create support tickets on ${siteSettings?.domainName} to address your issues or queries. Our support team is here to assist you.`}

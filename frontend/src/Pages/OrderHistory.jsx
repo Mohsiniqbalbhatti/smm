@@ -138,7 +138,7 @@ function OrderHistory() {
   return (
     <div>
       <Helmet>
-        <title>Order History | {siteSettings?.domainName}</title>
+        <title>{`Orders History | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`View your past orders and transactions on ${siteSettings?.domainName}. Easily track your order history and status for a seamless experience.`}

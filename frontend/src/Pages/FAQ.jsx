@@ -34,7 +34,7 @@ function FAQ() {
   return (
     <div className="px-2 px-lg-4">
       <Helmet>
-        <title>FAQ | {siteSettings?.domainName}</title>
+        <title>{`FAQ | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`Get answers to the most frequently asked questions on ${siteSettings?.domainName}. Find help and information about our services, policies, and more.`}

@@ -10,7 +10,9 @@ function Api() {
     <div>
       <div className="container-fluid mt-2">
         <Helmet>
-          <title>API Documentation | {siteSettings?.domainName}</title>
+          <title>{`API Documentation | ${
+            siteSettings?.domainName || ""
+          }`}</title>{" "}
           <meta
             name="description"
             content={`Learn how to use the ${siteSettings?.domainName} API to access and automate services. Comprehensive API documentation to guide developers.`}

@@ -78,10 +78,9 @@ function Services() {
   return (
     <div>
       <Helmet>
-        <title>
-          Our Services - {selectedCategory || "All Categories"} |{" "}
-          {siteSettings?.domainName}
-        </title>
+        <title>{`Our Services - ${selectedCategory || "All Categories"} | ${
+          siteSettings?.domainName || ""
+        }`}</title>
         <meta
           name="description"
           content={`Explore a wide range of services offered by ${

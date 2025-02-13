@@ -138,7 +138,7 @@ function AddFunds() {
   return (
     <div className="row">
       <Helmet>
-        <title>Add Funds | {siteSettings?.domainName}</title>
+        <title>{`ADD Funds | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`Easily add funds to your ${siteSettings?.domainName} account. Secure and reliable payment options to ensure seamless transactions.`}

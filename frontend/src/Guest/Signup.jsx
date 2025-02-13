@@ -109,6 +109,21 @@ function Signup() {
                 <span className="text-danger">{errors.fullname.message}</span>
               )}
             </div>
+            {/* USer Name */}
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Username
+              </label>
+              <input
+                type="text"
+                className="form-control p-2"
+                id="username"
+                {...register("username", { required: "Username is required" })}
+              />
+              {errors.username && (
+                <span className="text-danger">{errors.username.message}</span>
+              )}
+            </div>
 
             {/* Email */}
             <div className="mb-3">

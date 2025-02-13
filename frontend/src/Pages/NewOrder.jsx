@@ -296,7 +296,7 @@ function NewOrder() {
   return (
     <div className="px-4 px-lg-2">
       <Helmet>
-        <title>New Orders | {siteSettings?.domainName}</title>
+        <title>{`New Orders | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`Place new orders for services on ${siteSettings?.domainName}. Explore available services and start a new order for your social media needs.`}

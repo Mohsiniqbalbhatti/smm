@@ -69,7 +69,7 @@ function Updates() {
     <div>
       {/* SEO Metadata */}
       <Helmet>
-        <title>Updates | {siteSettings?.domainName}</title>
+        <title>{`New Updates | ${siteSettings?.domainName || ""}`}</title>{" "}
         <meta
           name="description"
           content={`Stay informed with the latest updates from ${siteSettings?.domainName}. Get real-time information about rate changes, service updates, and status changes.`}
